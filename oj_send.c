@@ -17,7 +17,7 @@ int main(){
 
             for(int i=0; i<n; i++){
                 scanf("%d", &num[i]);
-                num[i] = abs(num[i]) % k;
+                num[i] = abs(num[i]) % k;;
             }
 
             memset(dp, 0, sizeof(dp)), dp[0][0] = 1;
