@@ -7,7 +7,5 @@ ta
 test
 tm
 tree
-../data_structure/avl_tree
-../data_structure/linked_list
-../data_structure/queue
-../data_structure/stack
+
+../data_structure/run
