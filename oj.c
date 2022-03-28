@@ -2916,10 +2916,6 @@ void find_smallest_period(){
     }
 }
 
-void brute_force_find_smallest_period(){
-        
-}
-
 void compare_student(student *st, int index){
     for(int i=0; i<index; i++){
         
