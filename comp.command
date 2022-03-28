@@ -1,1 +1,0 @@
-gcc oj.c -o oj
