@@ -19,14 +19,13 @@ int main(){
     int n, k;
     int arr[100];
 
-    while(scanf("%d", &nn)){
-        for(int ii=0; ii<nn; ii++){
-            scanf("%d %d", &n, &k);
-            
-            for(int i=0; i<n; i++) scanf("%d", &arr[i]);
+    scanf("%d", &nn);
+    for(int ii=0; ii<nn; ii++){
+        scanf("%d %d", &n, &k);
+        
+        for(int i=0; i<n; i++) scanf("%d", &arr[i]);
 
-            if(check(arr, 0, 0, &n, &k) == 0) printf("Divisible\n");
-            else printf("Not divisible\n");
-        }
+        if(check(arr, 0, 0, &n, &k) == 0) printf("Divisible\n");
+        else printf("Not divisible\n");
     }
 }
