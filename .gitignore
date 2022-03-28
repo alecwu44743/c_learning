@@ -1,11 +1,4 @@
 .DS_Store
-lab
-oj_send
 oj
-st
-ta
-test
-tm
-tree
 
-../data_structure/run
+/data_structure/run
