@@ -70,7 +70,7 @@ typedef struct node Node;
 // typedef struct student student;
 
 struct student{
-    char name[10];
+    char name[25];
     int score;
 };
 typedef struct student student;
@@ -3060,6 +3060,65 @@ void sequ_division(){
     }
 }
 
+void phone_number(){
+    char str[100];
+    int data[26];
+
+    for(int i=0; i<18; i++){
+        data[i] = i / 3 + 2;
+    }
+    data[18] = 7;
+    data[19] = data[20] = data[21] = 8;
+    data[22] = data[23] = data[24] = data[25] = 9;
+
+    while(scanf("%s", str) != EOF){
+        int alpha = 0;
+        int hyphen = 0;
+
+        for(int i=0; i<strlen(str); i++){
+            if(isalpha(str[i])){
+                printf("%d", data[str[i] - 'A']);
+                alpha++;
+            }
+            else if(str[i] == '-'){
+                printf("%c", str[i]);
+                hyphen++;
+            }
+            else{
+                printf("%c", str[i]);
+            }
+        }
+        printf(" %d %d\n", alpha, hyphen);
+    }
+}
+
+void judge(){
+
+}
+
+void fib_str(){
+    char str[100][1000];
+    str[0][0] = "0";
+    str[1][0] = "1";
+
+    for(int i=2; 1<100; i++){
+        char temp[1000] = "";
+        strcat(temp, (str[i-2]));
+        strcat(temp, (str[i-1]));
+        strcpy((str[i]), temp);
+    }
+
+    for(int i=0; i<10; i++){
+        printf("%s\n", *(str[i]));
+    }
+
+
+}
+
+void strudent_highest_score_sex(){
+
+}
+
 void oj_fcu(){
     // oddsum();
     // fn();
@@ -3089,7 +3148,10 @@ void oj_fcu(){
     // str_decode();
 
     // sequ_division();
-    dp_sequ_division();
+    // dp_sequ_division();
+
+    // phone_number();
+    fib_str();
 
     // cntwords();
     // student_score();
