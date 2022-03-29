@@ -12,9 +12,6 @@ struct sstudent{
 };
 typedef struct sstudent sstudent;
 
-enum sex{Female, Male};
-
-
 
 int main(){
     sstudent st[4];
