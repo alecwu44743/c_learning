@@ -8,10 +8,9 @@
 struct sstudent{
     char name[25];
     int score;
-    sex;
+    char sex[20];
 };
 typedef struct sstudent sstudent;
-
 
 int main(){
     sstudent st[4];
