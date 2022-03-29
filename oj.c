@@ -69,11 +69,26 @@ typedef struct node Node;
 // };
 // typedef struct student student;
 
+typedef enum {Female, Male} fm;
+
 struct student{
     char name[25];
     int score;
+    fm FM;
 };
 typedef struct student student;
+
+// typedef enum sex Sex{
+//     Female,
+//     Male
+// }
+
+struct sstudent{
+    char name[25];
+    int score;
+    char sex[20];
+};
+typedef struct sstudent sstudent;
 
 Node * insertList(Node *np, int val){
     Node *newNode, *prev, *cur;
@@ -3115,8 +3130,35 @@ void fib_str(){
 
 }
 
-void strudent_highest_score_sex(){
+void student_highest_score_sex(){
+    sstudent st[4];
+    int m_max;
+    int m_max_val = -1;
+    int f_max;
+    int f_max_val = -1;
+    int i = 0;
 
+    while(scanf("%[^\t]", st[i].name) != EOF){
+        scanf("%d %s\n", &st[i].score, st[i].sex);
+
+        if(st[i].score > m_max_val && st[i].sex[0] == 'M'){
+            if(st[i].score > m_max_val && st[i].sex[0] == 'M'){
+                m_max = i;
+                m_max_val = st[i].score;
+            }  
+        }
+        if(st[i].score > f_max_val && st[i].sex[0] == 'F'){
+            f_max = i;
+            f_max_val = st[i].score;
+        }
+        i++;
+        // getchar();
+    }
+
+    printf("%s %d %s\n", st[f_max].name, st[f_max].score, st[f_max].sex);
+    printf("%s %d %s\n", st[m_max].name, st[m_max].score, st[m_max].sex);
+
+    // scanf("%[^\t] %d %d", str , &a);
 }
 
 void oj_fcu(){
@@ -3151,7 +3193,8 @@ void oj_fcu(){
     // dp_sequ_division();
 
     // phone_number();
-    fib_str();
+    // fib_str();
+    student_highest_score_sex();
 
     // cntwords();
     // student_score();
