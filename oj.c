@@ -3189,23 +3189,43 @@ void judge(){
     }
 }
 
+int strfib[111];
+
+void fib_str_bfs(long long int l, long long int r, int curr, int sign, int x, int y){
+    if(l < x || y < r) return;
+
+    if(l == r){
+        printf("%d", sign);
+        return;
+    }
+    fib_str_bfs(l, l+strfib[curr-2]-1, curr-2, sign, x, y);
+    fib_str_bfs(l+strfib[curr-2], r, curr-1, 1-sign, x, y);
+}
+
 void fib_str(){
-    char str[100][1000];
-    str[0][0] = "0";
-    str[1][0] = "1";
-
-    for(int i=2; i<100; i++){
-        char temp[1000] = "";
-        strcat(temp, (str[i-2]));
-        strcat(temp, (str[i-1]));
-        strcpy((str[i]), temp);
+    strfib[0] = strfib[1] = 1;
+    for(int i=2; i<111; i++){
+        strfib[i] = strfib[i-1] + strfib[i-2];
     }
 
-    for(int i=0; i<10; i++){
-        printf("%s\n", *(str[i]));
+    int t, n, x, y;
+    while(scanf("%d", &t)){
+        for(int ss=0; ss<t; ss++){
+            scanf("%d %d %d", n, x, y);
+
+            int cnt;
+            for(int i=0; i<=50; i++){
+                if((i % 2 == n % 2) && strfib[i] > y){
+                    cnt = i;
+                    break;
+                }
+            }
+
+            int sign = cnt % 2;
+            fib_str_bfs(0, strfib[cnt]-1, cnt, sign, x, y);
+            printf("\n");
+        }
     }
-
-
 }
 
 void student_highest_score_sex(){
