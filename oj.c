@@ -3189,42 +3189,41 @@ void judge(){
     }
 }
 
-int strfib[111];
 
-void fib_str_bfs(long long int l, long long int r, int curr, int sign, int x, int y){
-    if(l < x || y < r) return;
 
-    if(l == r){
-        printf("%d", sign);
-        return;
-    }
-    fib_str_bfs(l, l+strfib[curr-2]-1, curr-2, sign, x, y);
-    fib_str_bfs(l+strfib[curr-2], r, curr-1, 1-sign, x, y);
-}
-
-void fib_str(){
-    strfib[0] = strfib[1] = 1;
-    for(int i=2; i<111; i++){
-        strfib[i] = strfib[i-1] + strfib[i-2];
-    }
-
-    int t, n, x, y;
-    while(scanf("%d", &t)){
-        for(int ss=0; ss<t; ss++){
-            scanf("%d %d %d", n, x, y);
-
-            int cnt;
-            for(int i=0; i<=50; i++){
-                if((i % 2 == n % 2) && strfib[i] > y){
-                    cnt = i;
-                    break;
-                }
+void fib_str_bfs(){
+    long long f[48];
+    // f[46] > 2^31 - 1
+    
+    f[0] = f[1] = 1;
+    
+    for(int i = 2;i <= 47;++i)
+        f[i] = f[i - 1] + f[i - 2];
+    
+    int T;
+    long long N,l,r;
+    
+    scanf("%d",&T);
+    
+    while(T--){
+        scanf("%lld %lld %lld",&N,&l,&r);
+        if(N > 46) N -= (N - 46) / 2 * 2;
+        
+        for(long long i = l;i <= r;++i){
+            long long pos = i;
+            int n = N;
+            
+            while(n >= 2){
+                if(pos >= f[n - 2]){
+                    pos -= f[n - 2];
+                    --n;
+                }else n -= 2;
             }
-
-            int sign = cnt % 2;
-            fib_str_bfs(0, strfib[cnt]-1, cnt, sign, x, y);
-            printf("\n");
+            
+            putchar('0' + n);
         }
+        
+        putchar('\n');
     }
 }
 
