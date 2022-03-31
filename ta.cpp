@@ -20,26 +20,30 @@ int main() {
 	cin >> times;
 	while (times--) {
 		cin >> number >> left >> right;
+
 		if (number > 47)
-			number = 47 - !(number & 1);
-		for (int i = left; i <= right; ++i) {
-			nowIndex = i; buffer = number;
-			while (buffer >= 4) {
+			number = 46 + (number % 2); // n = 46 + (k % 2)
+
+		for (int i = left; i <= right; i++) {
+			nowIndex = i;
+            buffer = number;
+
+			while (buffer >= 4) { // buffer = n
 				sums = 0;
-				if (buffer & 1) {
-					if (nowIndex < Fibonacci[(buffer >> 1) - 1][1]) {
+				if (buffer % 2) {
+					if (nowIndex < Fibonacci[(buffer / 2) - 1][1]) {
 						buffer -= 2;
 						continue;
 					}
-					sums += Fibonacci[(buffer >> 1) - 1][1];
+					sums += Fibonacci[(buffer / 2) - 1][1];
 				}
-				for (int j = 0; j < 2; ++j) {
-					if (nowIndex < sums + Fibonacci[(buffer >> 1) - 1][j]) {
-						buffer = (buffer - 2 - (buffer & 1)) + j;
+				for (int j = 0; j < 2; j++) {
+					if (nowIndex < sums + Fibonacci[(buffer / 2) - 1][j]) {
+						buffer = (buffer - 2 - (buffer % 2)) + j;
 						nowIndex -= sums;
 						break;
 					}
-					sums += Fibonacci[(buffer >> 1) - 1][j];
+					sums += Fibonacci[(buffer / 2) - 1][j];
 				}
 			}
 			cout << BFSs[buffer][nowIndex];
