@@ -7,7 +7,7 @@ using namespace std;
 // 0                1
 // 01               101
 // 01101            10101101
-// 0110110101101    101011010110110101101
+// 0110110101101    10101101 0110110101101
 // 而每個字串的長度為
 // 1                           1
 // 2                           3
@@ -64,8 +64,8 @@ int main() {
 
 				for(int j=0; j<2; j++){
 					if(nowIndex < sum + fib[(buffer / 2) - 1][j]){
-						buffer = (buffer - 2 - (buffer % 2)) + j; // buffer % 2 ->  check X or Y
-						                                          // + j -> 0 or 1
+						buffer = (buffer - 2  - (buffer % 2)) + j;	// buffer % 2 ->  check X or Y
+						                                        	// + j -> 0 or 1
 						nowIndex -= sum; // minus the preceding length
 						break;
 					}
