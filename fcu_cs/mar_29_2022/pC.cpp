@@ -65,7 +65,7 @@ int main() {
 				for(int j=0; j<2; j++){
 					if(nowIndex < sum + fib[(buffer / 2) - 1][j]){
 						buffer = (buffer - 2 - (buffer % 2)) + j; // buffer % 2 ->  check X or Y
-						                                          // + j -> ??
+						                                          // + j -> 0 or 1
 						nowIndex -= sum; // minus the preceding length
 						break;
 					}
