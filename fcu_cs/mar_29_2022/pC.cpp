@@ -2,45 +2,54 @@
 #include <string>
 using namespace std;
 
-unsigned Fibonacci[24][2] = { { 1, 1 } };
-string BFSs[4] = { "0", "1", "01", "101" };
+unsigned int fib[24][2] = { {1, 1} };
+string BFSs[4] = {"0", "1", "01", "101"};
 
-void Initialize() {
+void fib_init() {
 	for (int i = 1; i < 24; ++i) {
-		Fibonacci[i][0] = Fibonacci[i - 1][0] + Fibonacci[i - 1][1];
-		Fibonacci[i][1] = Fibonacci[i - 1][1] + Fibonacci[i][0];
+		fib[i][0] = fib[i - 1][0] + fib[i - 1][1];
+		fib[i][1] = fib[i - 1][1] + fib[i][0];
 	}
 }
 
+
 int main() {
 	cin.sync_with_stdio(false); cin.tie(nullptr);
-	long long times, number, left, right, nowIndex, buffer;
-	unsigned sums;
-	Initialize();
-	cin >> times;
-	while (times--) {
-		cin >> number >> left >> right;
-		if (number > 47)
-			number = 47 - !(number & 1);
-		for (int i = left; i <= right; ++i) {
-			nowIndex = i; buffer = number;
-			while (buffer >= 4) {
-				sums = 0;
-				if (buffer & 1) {
-					if (nowIndex < Fibonacci[(buffer >> 1) - 1][1]) {
+
+	long long int t, n, l, r, nowIndex, buffer;
+	unsigned sum;
+
+	fib_init();
+
+	cin >> t;
+	while(t--){
+		cin >> n >> l >> r;
+
+		if(n > 47) n = 46 + (n % 2);
+
+		for(int i=l; i<=r; i++){
+			nowIndex = i;
+			buffer = n;
+
+			while(buffer >= 4){
+				sum = 0;
+				if(buffer % 2){
+					if(nowIndex < fib[(buffer / 2) - 1][1]){
 						buffer -= 2;
 						continue;
 					}
-					sums += Fibonacci[(buffer >> 1) - 1][1];
+					sum += fib[(buffer / 2) - 1][1];
 				}
-				for (int j = 0; j < 2; ++j) {
-					if (nowIndex < sums + Fibonacci[(buffer >> 1) - 1][j]) {
-						buffer = (buffer - 2 - (buffer & 1)) + j;
-						nowIndex -= sums;
+
+				for(int j=0; j<2; j++){
+					if(nowIndex < sum + fib[(buffer / 2) - 1][j]){
+						buffer = (buffer - 2 - (buffer % 2)) + j;
+						nowIndex -= sum;
 						break;
 					}
-					sums += Fibonacci[(buffer >> 1) - 1][j];
+					sum += fib[(buffer / 2) - 1][j];
 				}
+
 			}
 			cout << BFSs[buffer][nowIndex];
 		}
