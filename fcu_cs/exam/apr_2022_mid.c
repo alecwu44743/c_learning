@@ -62,10 +62,10 @@ void ListofConquests(){
 
 
 // c004: 10812 - Beat the Spread! - https://zerojudge.tw/ShowProblem?problemid=c004
-// (1) s = s + y
+// (1) s = x + y
 // (2) d = x - y
 // 
-// (1) + (2)
+// (1) + (2) and (1) - (2)
 //  => s + d = 2x, must be even
 //  => s – d = 2y, must be greater than zero
 void beat(){
@@ -185,11 +185,13 @@ void rec_divisibility(){
 }
 
 // DP
+// fcu_oj -> pass
+// zerojudge -> TLE QQ
 void dp_divisibility(){
     int nn;
     int n, k;
-    int num[100];
-    int dp[1000][1000];
+    int num[10004];
+    int dp[10004][10004];
 
     while(scanf("%d", &nn)){
         for(int ii=0; ii<nn; ii++){
@@ -340,6 +342,11 @@ void judge(){
         ccase++;
     }
 }
+
+
+
+// f508: 12041 - BFS (Binary Fibonacci String) - https://zerojudge.tw/ShowProblem?problemid=f508
+// my code (.cpp) - https://github.com/alecwu44743/c_learning/blob/main/fcu_cs/mar_29_2022/pC.cpp
 
 
 
