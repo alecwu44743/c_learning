@@ -3061,7 +3061,7 @@ void dp_sequ_division(){
 void sequ_division(){
     int nn;
     int n, k;
-    int arr[100];
+    int arr[10000];
 
     while(scanf("%d", &nn)){
         for(int ii=0; ii<nn; ii++){

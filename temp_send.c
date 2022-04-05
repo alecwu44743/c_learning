@@ -7,23 +7,34 @@
 #include <time.h>
 
 int main(){
-    int x, y;
-    
-    while(scanf("%d %d", &x, &y)){
-        if(x==0 && y==0) break;
+    char str[100];
+    int data[26];
 
-        int max_seq = 0;
-        for(int i=x; i<=y; i++){
-            int n = i;
-            int cnt = 1;
-            while(n != 1){
-                if(n%2) n = 3*n+1;
-                else n /= 2;
-                cnt++;
+    for(int i=0; i<18; i++){
+        data[i] = i / 3 + 2;
+    }
+    data[18] = 7;
+    data[19] = data[20] = data[21] = 8;
+    data[22] = data[23] = data[24] = data[25] = 9;
+
+    while(scanf("%s", str) != EOF){
+        int alpha = 0;
+        int hyphen = 0;
+
+        for(int i=0; i<strlen(str); i++){
+            if(isalpha(str[i])){
+                printf("%d", data[str[i] - 'A']);
+                alpha++;
             }
-            if(max_seq < cnt) max_seq = cnt;
+            else if(str[i] == '-'){
+                printf("%c", str[i]);
+                hyphen++;
+            }
+            else{
+                printf("%c", str[i]);
+            }
         }
-
-        printf("%d %d %d\n", x, y, max_seq);
+        printf("\n");
+        // printf(" %d %d\n", alpha, hyphen);
     }
 }
