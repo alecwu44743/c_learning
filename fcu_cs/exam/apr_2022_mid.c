@@ -352,4 +352,12 @@ void judge(){
 
 int main(){
     // ListofConquests();
+    // beat();
+    // threeNplusOne();
+    // squre_find();
+    // counting_words();
+    // rec_divisibility();
+    // dp_divisibility();
+    // phone_number();
+    // judge();
 }
