@@ -345,6 +345,82 @@ void judge(){
 
 
 
+// d139: Compressed String - https://zerojudge.tw/ShowProblem?problemid=d139
+void comprStr(){
+    int n;
+    int cc;
+    char str[1000];
+
+    // scanf("%d", &cc);
+    // for(int cc=0; cc<n; cc++){
+        while(scanf("%s", str) != EOF){
+            int cnt = 0;
+            for(int i=0; i<strlen(str); i++){
+                char c = str[i];
+                cnt++;
+
+                if(str[i+1] != c){
+                    if(cnt > 2){
+                        printf("%d%c", cnt, c);
+                    }
+                    else{
+                        for(int j=0; j<cnt; j++) printf("%c", c);
+                    }
+                    cnt = 0;
+                }
+            }
+
+            printf("\n");
+
+        }
+
+        // printf("\n");
+}
+
+
+
+// integer palindrome
+long long int intReverse(long long int n){
+    int _sum = 0;
+
+    while(n > 0){
+        _sum *= 10;
+        _sum += n%10;
+        n /= 10;
+    }
+
+    return _sum;
+}
+
+void integerPalindrome(){
+    int n;
+    long long int num;
+    long long int rev_n;
+
+    scanf("%d", &n);
+    for(int ss=0; ss<n; ss++){
+        scanf("%lld", &num);
+
+        rev_n = intReverse(num);
+
+        if(rev_n == num){
+            printf("%d %lld\n", 0, num);
+        }
+        else{
+            int cnt = 0;
+
+            while(rev_n != num){
+                cnt++;
+                num += rev_n;
+                rev_n = intReverse(num);
+            }
+            printf("%d %lld\n", cnt, num);
+        }
+    }
+}
+
+
+
 // f508: 12041 - BFS (Binary Fibonacci String) - https://zerojudge.tw/ShowProblem?problemid=f508
 // my code (.cpp) - https://github.com/alecwu44743/c_learning/blob/main/fcu_cs/mar_29_2022/pC.cpp
 
@@ -360,4 +436,6 @@ int main(){
     // dp_divisibility();
     // phone_number();
     // judge();
+    // comprStr();
+    // integerPalindrome();
 }

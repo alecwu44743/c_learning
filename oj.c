@@ -2532,9 +2532,11 @@ void do_while_sumdigit(){
 
 void comprsStr(){
     int n;
-    char str[100];
+    int cc;
+    char str[1000];
 
-    for(int cc=0; cc<n; cc++){
+    // scanf("%d", &cc);
+    // for(int cc=0; cc<n; cc++){
         scanf("%s", str);
 
         int cnt = 0;
@@ -2554,7 +2556,7 @@ void comprsStr(){
         }
 
         printf("\n");
-    }
+    // }
 }
 
 void countingWords(){

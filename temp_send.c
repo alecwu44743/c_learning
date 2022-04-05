@@ -6,37 +6,41 @@
 #include <stdbool.h>
 #include <time.h>
 
+long long int intReverse(long long int n){
+    int _sum = 0;
+
+    while(n > 0){
+        _sum *= 10;
+        _sum += n%10;
+        n /= 10;
+    }
+
+    return _sum;
+}
+
 int main(){
-    int nn;
-    int n, k;
-    int num[10004];
-    int dp[10004][104];
+    int n;
+    long long int num;
+    long long int rev_n;
 
-    while(scanf("%d", &nn)){
-        for(int ii=0; ii<nn; ii++){
-            scanf("%d %d", &n, &k);
+    scanf("%d", &n);
+    for(int ss=0; ss<n; ss++){
+        scanf("%lld", &num);
 
-            for(int i=0; i<n; i++){
-                scanf("%d", &num[i]);
-                num[i] = abs(num[i]) % k;
-            }
+        rev_n = intReverse(num);
 
-            memset(dp, 0, sizeof(dp)), dp[0][0] = 1;
-            for(int i=0; i<n; i++){
-                for(int j=0; j<k; j++){
-                    if(dp[i][j]){
-                        dp[i+1][(j+num[i]+k) % k] = 1;
-                        dp[i+1][(j-num[i]+k) % k] = 1;
-                    }
-                }
-            }
+        if(rev_n == num){
+            printf("%d %lld\n", 0, num);
+        }
+        else{
+            int cnt = 0;
 
-            if(dp[n][0]){
-                printf("Divisible\n");
+            while(rev_n != num){
+                cnt++;
+                num += rev_n;
+                rev_n = intReverse(num);
             }
-            else{
-                printf("Not divisible\n");
-            }
+            printf("%d %lld\n", cnt, num);
         }
     }
 }
