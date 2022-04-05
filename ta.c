@@ -3,82 +3,58 @@
 #include<string.h>
 #include<ctype.h>
 
+unsigned int fib[24][2] = { {1, 1} };
+char BFSs [4][3] = {"0", "1", "01", "101"};
 
-char std[100][125];
-char input[100][125];
-int n,m;
-
-int flag(){
-    for(int i=0;i<n;i++){
-        for(int j=0;j<strlen(std[i]);j++){
-            if(std[i][j] != input[i][j] || strlen(std[i]) != strlen(input[i])){
-                return 0;
-            }
-        }
+void init_fib(){
+    for(int i=1; i<24; i++){
+        fib[i][0] = fib[i-1][0] + fib[i-1][i];
+        fib[i][1] = fib[i-1][1] + fib[i][0];
     }
-    return 1;
-}
-
-int judge(){
-    char re_std[150];
-    int r_s = 0;
-    char re_input[150];
-    int r_i = 0;
-        
-    /*std part*/
-    for(int i=0;i<n;i++){
-        for(int j=0;std[i][j] != '\0';j++){
-            if(!iscntrl(std[i][j]) && !isspace(std[i][j])){
-                re_std[r_s] = std[i][j];
-                r_s++;
-            }
-        }
-    }
-    re_std[r_s] = '\0';
-    /*input part*/
-    for(int i=0;i<m;i++){
-        for(int j=0;input[i][j] != '\0';j++){
-            if(!iscntrl(input[i][j]) && !isspace(input[i][j])){
-                re_input[r_i] = input[i][j];
-                r_i++;
-            }
-        }
-    }
-    re_input[r_i] = '\0';
-    return strcmp(re_std,re_input) == 0;
 }
 
 int main(){
-    int times=1;
-    while(scanf("%d",&n) != EOF){
-        if(n == 0) break;
-        int add = 0;
-        for(int i=0;i<n;i++){
-            getchar();
-            scanf("%[^\n]",std[i]);
-            add += strlen(std[i]);
-            
+    long long int t, n, l, r, nowIndex, buffer;
+    unsigned minus;
+
+    fib_init();
+
+    scanf("%d", &t);
+    while(t--){
+        scanf("%d %d %d", &n, &l, &r);
+
+        if(n > 47) n = 46 + (n % 2);
+
+        for(int i=l; i<=r; i++){
+            nowIndex = i;
+            buffer = n;
+
+            while(buffer >= 4){
+                minus = 0;
+
+                if(buffer % 2){
+                    if(nowIndex < fib[buffer / 2 - 1][1]){
+                        buffer -= 2;
+                        continue;
+                    }
+                    minus += fib[buffer / 2 - 1][1];
+                }
+
+                for(int j=0; j<2; j++){
+                    if(nowIndex < minus + fib[buffer / 2 - 1][j]){
+                        buffer = buffer - 2 - (buffer % 2) + j;
+                        nowIndex -= minus;
+
+                        break;
+                    }
+
+                    minus += fib[buffer / 2 - 1][j];
+                }
+            }
+
+            printf("%c", BFSs[buffer][nowIndex]);
         }
 
-        scanf("%d",&m);
-        
-        for(int j=0;j<m;j++){
-            getchar();
-            scanf("%[^\n]",input[j]);
-            
-        }
-        
-        
-        
-        if(flag()){
-            printf("Run #%d: Accepted %d\n",times,add);
-        }
-        else if(judge()){
-            printf("Run #%d: Presentation Error %d\n",times,add);
-        }
-        else{
-            printf("Run #%d: Wrong Answer %d\n",times,add);
-        }
-        times++;
+        printf("\n");
     }
 }

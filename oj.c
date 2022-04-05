@@ -3292,7 +3292,7 @@ void oj_fcu(){
     // phone_number();
     // fib_str();
     // student_highest_score_sex();
-    judge();
+    // judge();
 
     // cntwords();
     // student_score();
