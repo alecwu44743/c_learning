@@ -85,7 +85,6 @@ void beat(){
 
 
 
-
 // d712: The 3n + 1 problem - https://zerojudge.tw/ShowProblem?problemid=d712
 // fcu_oj -> pass
 // zerojudge by C -> TLE
