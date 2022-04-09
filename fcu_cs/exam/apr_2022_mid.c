@@ -425,6 +425,35 @@ void integerPalindrome(){
 
 
 
+// Problems - String and Character
+
+// a132: 10931 - Parity - https://zerojudge.tw/ShowProblem?problemid=a132
+void parity(){
+    int num;
+
+    while(scanf("%d", &num) && num != 0){
+        char appnd;
+        char str_bin[1000] = "";
+        int cnt = 0;
+        int len = 0;
+
+        while(num){
+            cnt += (num & 1);
+            appnd = '0' + (num & 1);
+            strncat(str_bin, &appnd, 1);
+            num >>= 1;
+        }
+
+        printf("The parity of ");
+        for(int i=strlen(str_bin)-1; i>=0; i--){
+            printf("%c", str_bin[i]);
+        }
+        printf(" is %d (mod 2).\n", cnt);
+    }
+}
+
+
+
 int main(){
     // ListofConquests();
     // beat();
@@ -437,4 +466,6 @@ int main(){
     // judge();
     // comprStr();
     // integerPalindrome();
+
+    parity();
 }

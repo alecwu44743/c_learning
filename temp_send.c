@@ -6,41 +6,26 @@
 #include <stdbool.h>
 #include <time.h>
 
-long long int intReverse(long long int n){
-    int _sum = 0;
-
-    while(n > 0){
-        _sum *= 10;
-        _sum += n%10;
-        n /= 10;
-    }
-
-    return _sum;
-}
-
 int main(){
-    int n;
-    long long int num;
-    long long int rev_n;
+    int num;
 
-    scanf("%d", &n);
-    for(int ss=0; ss<n; ss++){
-        scanf("%lld", &num);
+    while(scanf("%d", &num) && num != 0){
+        char appnd;
+        char str_bin[1000] = "";
+        int cnt = 0;
+        int len = 0;
 
-        rev_n = intReverse(num);
-
-        if(rev_n == num){
-            printf("%d %lld\n", 0, num);
+        while(num){
+            cnt += (num & 1);
+            appnd = '0' + (num & 1);
+            strncat(str_bin, &appnd, 1);
+            num >>= 1;
         }
-        else{
-            int cnt = 0;
 
-            while(rev_n != num){
-                cnt++;
-                num += rev_n;
-                rev_n = intReverse(num);
-            }
-            printf("%d %lld\n", cnt, num);
+        printf("The parity of ");
+        for(int i=strlen(str_bin)-1; i>=0; i--){
+            printf("%c", str_bin[i]);
         }
+        printf(" is %d (mod 2).\n", cnt);
     }
 }
