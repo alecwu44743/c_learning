@@ -504,5 +504,5 @@ int main(){
     // integerPalindrome();
     // abstractNames();
 
-    parity();
+    // parity();
 }
