@@ -425,6 +425,42 @@ void integerPalindrome(){
 
 
 
+// FCU OJ Problems - pB, Week 4 (UVa 11713)
+int isVow(char c){
+    return c == 'a' || c == 'e' || c == 'i'
+           || c == 'i' || c == 'o' || c== 'u';
+}
+
+void abstractNames(){
+    int n;
+
+    scanf("%d", &n);
+    for(int ss=0; ss<n; ss++){
+        char a[100];
+        char b[100];
+
+        scanf("%s", a);
+        scanf("%s", b);
+
+        if(strlen(a) != strlen(b)){
+            printf("%s\n", "No");
+            continue;
+        }
+
+        int isSame = 1;
+        for(int i=0; i<strlen(a); i++){
+            if(a[i] != b[i] && (!isVow(a[i]) || !isVow(b[i]))){
+                isSame = 0;
+                break;
+            }
+        }
+
+        printf("%s\n", isSame ? "Yes" : "No");
+    }
+}
+
+
+
 // Problems - String and Character
 
 // a132: 10931 - Parity - https://zerojudge.tw/ShowProblem?problemid=a132
@@ -466,6 +502,7 @@ int main(){
     // judge();
     // comprStr();
     // integerPalindrome();
+    // abstractNames();
 
     parity();
 }
