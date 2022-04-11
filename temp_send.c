@@ -7,25 +7,36 @@
 #include <time.h>
 
 int main(){
-    int num;
+    int n;
+    while(scanf("%d", &n) != EOF){
+        if(n == 0) break;
 
-    while(scanf("%d", &num) && num != 0){
-        char appnd;
-        char str_bin[1000] = "";
-        int cnt = 0;
-        int len = 0;
+        int arr_alpha[26] = {0};
+        int max_cnt = -1;
+        char str[100];
+        char c;
+        for(int ss=0; ss<n; ss++){
+            getchar();
+            scanf("%[^\n]", str);
 
-        while(num){
-            cnt += (num & 1);
-            appnd = '0' + (num & 1);
-            strncat(str_bin, &appnd, 1);
-            num >>= 1;
+            for(int idx=0; idx<strlen(str); idx++){
+                c = str[idx];
+
+                if(isalpha(c)){
+                    arr_alpha[toupper(c) - 'A']++;
+
+                    if(arr_alpha[toupper(c) - 'A'] > max_cnt) max_cnt = arr_alpha[toupper(c) - 'A'];
+                }
+            }
         }
 
-        printf("The parity of ");
-        for(int i=strlen(str_bin)-1; i>=0; i--){
-            printf("%c", str_bin[i]);
+        for(int cnt = max_cnt; cnt > 0; cnt--){
+            for(int i=0; i<26; i++){
+                if(arr_alpha[i] == cnt){
+                    printf("%c %d\n", 'A'+i, cnt);
+                }
+            }
         }
-        printf(" is %d (mod 2).\n", cnt);
+        
     }
 }
