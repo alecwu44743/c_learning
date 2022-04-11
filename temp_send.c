@@ -6,37 +6,31 @@
 #include <stdbool.h>
 #include <time.h>
 
+int check(int arr[], int i, int sum, int *N, int *K){
+    if(i == *N){
+        printf("%d ", sum);
+        return abs(sum) % (*K);
+    }
+
+    if(check(arr, i+1, sum+arr[i], N, K) == 0) return 0;
+    if(check(arr, i+1, arr[i]-sum, N, K) == 0) return 0;
+
+    return 1;
+}
+
 int main(){
-    int n;
-    while(scanf("%d", &n) != EOF){
-        if(n == 0) break;
+    int nn;
+    int n, k;
+    int arr[10000];
 
-        int arr_alpha[26] = {0};
-        int max_cnt = -1;
-        char str[100];
-        char c;
-        for(int ss=0; ss<n; ss++){
-            getchar();
-            scanf("%[^\n]", str);
+    while(scanf("%d", &nn)){
+        for(int ii=0; ii<nn; ii++){
+            scanf("%d %d", &n, &k);
+            
+            for(int i=0; i<n; i++) scanf("%d", &arr[i]);
 
-            for(int idx=0; idx<strlen(str); idx++){
-                c = str[idx];
-
-                if(isalpha(c)){
-                    arr_alpha[toupper(c) - 'A']++;
-
-                    if(arr_alpha[toupper(c) - 'A'] > max_cnt) max_cnt = arr_alpha[toupper(c) - 'A'];
-                }
-            }
+            if(check(arr, 0, 0, &n, &k) == 0) printf("Divisible\n");
+            else printf("Not Divisible\n");
         }
-
-        for(int cnt = max_cnt; cnt > 0; cnt--){
-            for(int i=0; i<26; i++){
-                if(arr_alpha[i] == cnt){
-                    printf("%c %d\n", 'A'+i, cnt);
-                }
-            }
-        }
-        
     }
 }

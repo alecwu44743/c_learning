@@ -223,6 +223,41 @@ void dp_divisibility(){
 
 
 
+// FCU OJ Problems - pB, Week 5
+void easy_find_smallest_period(){
+    int n;
+    char str[256];
+    char c;
+    
+    while(scanf("%d", &n) != EOF){
+        
+
+        for(int ss = 0; ss < n; ss++){
+            scanf("%c", &c);
+            scanf("%s", str);
+
+            int llen = strlen(str);
+            int i, j;
+
+            for(i=1; i<llen; i++){
+                for(j=0; j+i<llen; j++){
+                    if(str[j] != str[j+i]) break;
+                }
+                if(i+j == llen) break;
+            }
+
+            if(llen % i != 0){
+                printf("%d\n", llen);
+            }
+            else{
+                printf("%d\n", i);
+            }
+        }
+    }
+}
+
+
+
 // d670: 10921 - Find the Telephone - https://zerojudge.tw/ShowProblem?problemid=d670
 void phone_number(){
     char str[100];
