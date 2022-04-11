@@ -291,7 +291,7 @@ void crypt(){
                 }
             }
         }
-        
+
     }
 }
 
@@ -541,6 +541,7 @@ int main(){
     // comprStr();
     // integerPalindrome();
     // abstractNames();
+    // crypt();
 
     // parity();
 }
