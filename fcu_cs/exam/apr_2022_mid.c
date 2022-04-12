@@ -599,6 +599,41 @@ void parity(){
 
 
 
+// UVA 10642 Can You Solve It?
+void solve(){
+    long long int t, x, y;
+
+    while(scanf("%lld", &t) != EOF){
+        for(int ss=1; ss<=t; ss++){
+            long long int step1, step2;
+            long long int n;
+            
+            scanf("%lld %lld", &x, &y);
+            if(x == 0 && y == 0){
+                step1 = 0;
+            }
+            else{
+                n = x + y - 1;
+                step1 = (n*n + 3*n)/2 + (x + 1);
+            }
+
+            scanf("%lld %lld", &x, &y);
+            if(x == 0 && y == 0){
+                step2 = 0;
+            }
+            else{
+                n = x + y - 1;
+                step2 = (n*n + 3*n)/2 + (x + 1);
+            }
+
+            printf("Case %d: %lld\n", ss, step2 - step1);
+
+        }
+    }
+}
+
+
+
 int main(){
     // ListofConquests();
     // beat();
@@ -614,6 +649,7 @@ int main(){
     // abstractNames();
     // crypt();
     // str_decode()
+    solve();
 
     // parity();
 }
