@@ -599,7 +599,7 @@ void parity(){
 
 
 
-// UVA 10642 Can You Solve It?
+// UVA 10642 Can You Solve It? - pD, midterm-exam, April 12 2022
 void solve(){
     long long int t, x, y;
 
