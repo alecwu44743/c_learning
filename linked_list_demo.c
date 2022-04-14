@@ -4,9 +4,9 @@
 
 struct student{
     char name[100];
-	char id[100];
-	int grade;
-	struct student *next;
+    char id[100];
+    int grade;
+    struct student *next;
 };
 typedef struct student student;
 
