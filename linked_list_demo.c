@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct student{
     char name[100];
@@ -49,6 +50,7 @@ void append_student(){
         newStudent->next = NULL;
         start->next = newStudent;
     }
+
 }
 
 void delete_student(){
@@ -59,7 +61,7 @@ void delete_student(){
     printf("Enter student ID: ");
     scanf("%s", _id);
 
-    if(start->id == _id){
+    if(strcmp(start->id, _id) == 0){
         to_delete = start;
         start = start->next;
         free(to_delete);
@@ -67,10 +69,12 @@ void delete_student(){
     else{
         prev = start;
         curr = start->next;
-        while(curr != NULL && curr->id != _id){
+
+        while(curr != NULL && strcmp(curr->id, _id) != 0){
             prev = curr;
             curr = curr->next;
         }
+
         if(curr == NULL){
             printf("Student not found QQ.\n");
         }
