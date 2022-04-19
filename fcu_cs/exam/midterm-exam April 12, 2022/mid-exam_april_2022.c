@@ -113,13 +113,42 @@ void pC(){
     }
 }
 
+// reference - https://yuihuang.com/uva-10642/
 void pD(){
+    int ccase = 0;
+    long long int x, y, step1, step2;
+    long long int n;
 
+    while(scanf("%d", &ccase) != EOF){
+        if(ccase == 0) break;
+
+        for(int cc=1; cc<=ccase; cc++){
+            scanf("%lld %lld", &x, &y);
+            if(x ==0 && y==0){
+                step1 = 0;
+            }
+            else{
+                n = x + y - 1;
+                step1 = (n*n + 3*n)/2 + (x + 1);
+            }
+
+            scanf("%lld %lld", &x, &y);
+            if(x ==0 && y==0){
+                step2 = 0;
+            }
+            else{
+                n = x + y - 1;
+                step2 = (n*n + 3*n)/2 + (x + 1);
+            }
+            
+            printf("Case %d: %lld\n", cc, step2-step1);
+        }
+    }
 }
 
 int main(){
     // pA(); 
-    pB(); 
+    // pB(); 
     // pC(); 
     // pD();
 }
