@@ -42,25 +42,41 @@ long long int pB_pal(long long int n){
     return _sum;
 }
 
+long long int intReverse(long long int n){
+    int _sum = 0;
+
+    while(n > 0){
+        _sum *= 10;
+        _sum += n%10;
+        n /= 10;
+    }
+
+    return _sum;
+}
+
 void pB(){
-    int num;
-    long long int n;
+    int n;
+    long long int num;
+    long long int rev_n;
 
-    while(scanf("%d", &num)){
-        for(int ss=0; ss<num; ss++){
+    scanf("%d", &n);
+    for(int ss=0; ss<n; ss++){
+        scanf("%lld", &num);
+
+        rev_n = intReverse(num);
+
+        if(rev_n == num){
+            printf("%d %lld\n", 0, num);
+        }
+        else{
             int cnt = 0;
-            long long int rev;
 
-            scanf("%lld", &n);
-            
-            rev = pB_pal(n);
-            do{
-                n += rev;
+            while(rev_n != num){
                 cnt++;
-                rev = pB_pal(n);
-            }while(n != rev);
-
-            printf("%d %lld\n", cnt, n);
+                num += rev_n;
+                rev_n = intReverse(num);
+            }
+            printf("%d %lld\n", cnt, num);
         }
     }
 }

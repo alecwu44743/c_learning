@@ -3429,7 +3429,7 @@ void oj_fcu(){
     // no_sort_crypt();
     // easy_find_smallest_period();
     // gcd_sum();
-    happy_happy();
+    // happy_happy();
 
     // cntwords();
     // student_score();
