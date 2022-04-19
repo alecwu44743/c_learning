@@ -1,3 +1,6 @@
+// UVa 10591: Happy Number
+// https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=1532
+
 #include <stdio.h>
 #include <stdlib.h>
 
