@@ -13,7 +13,7 @@ typedef struct student student;
 student *head = NULL;
 
 void print_students(){
-    student *start = head;
+    student *start = head; //
 
     if(start == NULL){
         printf("Student list is empty.\n");

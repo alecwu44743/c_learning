@@ -3327,6 +3327,70 @@ void no_sort_crypt(){
     }
 }
 
+int pB_gcd(int x, int y){
+    int n = x*y;
+    while(y != 0){
+        int t = y;
+        y = x%y;
+        x = t;
+    }
+
+    return x;
+}
+
+void gcd_sum(){
+    int g, n;
+
+    while(scanf("%d", &n)){
+        if(n == 0) break;
+
+        g = 0;
+        for(int i=1; i<n; i++){
+            for(int j=i+1; j<=n; j++){
+                g += pB_gcd(i, j);
+            }
+        }
+
+        printf("%d\n", g);
+    }
+}
+
+void happy_happy(){
+    int ccase;
+    int num;
+    int happy;
+    int isHappy = 0;
+    
+    while(scanf("%d", &ccase) != EOF){
+        for(int cc = 1; cc<=ccase; cc++){
+            scanf("%d", &num);
+
+            int n = num;
+            while(1){
+                int _sum = 0;
+
+                while(n){
+                    _sum += (n%10) * (n%10);
+                    n /= 10;
+                }
+
+                if(_sum == 1){
+                    isHappy = 1;
+                    break;
+                }
+                if(_sum < 10) break;
+
+                n = _sum;
+            }
+
+            printf("Case #%d: %d is ", cc, num);
+            printf("%s\n", (isHappy) ? "a Happy number." : "an Unhappy number.");
+
+            isHappy = 0;
+        }
+    }
+}
+
 void oj_fcu(){
     // oddsum();
     // fn();
@@ -3363,7 +3427,9 @@ void oj_fcu(){
     // student_highest_score_sex();
     // judge();
     // no_sort_crypt();
-    easy_find_smallest_period();
+    // easy_find_smallest_period();
+    // gcd_sum();
+    happy_happy();
 
     // cntwords();
     // student_score();
