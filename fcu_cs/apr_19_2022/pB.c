@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int gcd(int x, int y){
-    int n = x*y;
+    // int n = x*y;
     while(y != 0){
         int t = y;
         y = x%y;
