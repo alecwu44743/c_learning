@@ -74,11 +74,11 @@ Node* deleteNode(Node *start, int val){
         printf("%d not found.\n", val);
     }
     else{ // delete the node
-        if(curr->data == val){
+        // if(curr->data == val){
             temp = curr; // store the node to be deleted
             prev->next = curr->next; // remove the node from the list
             free(temp); // free the memory
-        }
+        // }
     }
 
     return start;
