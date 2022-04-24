@@ -1,60 +1,96 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
 
-unsigned int fib[24][2] = { {1, 1} };
-char BFSs [4][3] = {"0", "1", "01", "101"};
+struct node{
+    int data;
+    struct node *next;
+};
+typedef struct node node;
 
-void init_fib(){
-    for(int i=1; i<24; i++){
-        fib[i][0] = fib[i-1][0] + fib[i-1][i];
-        fib[i][1] = fib[i-1][1] + fib[i][0];
+node* head = NULL;
+
+void print_list(){
+    if(head == NULL){
+        printf("List is empty.\n");
+    }
+    else{
+        node *start = head;
+
+        while(start != NULL){
+            printf("%d--> ", start->data);
+            start = start->next;
+        }
+        printf("NULL\n");
     }
 }
 
-int main(){
-    long long int t, n, l, r, nowIndex, buffer;
-    unsigned minus;
+void insert_node(int val){
+    node* newNode;
 
-    fib_init();
+    newNode = (node *)malloc(sizeof(node));
+    newNode->data = val;
+    newNode->next = NULL;
 
-    scanf("%d", &t);
-    while(t--){
-        scanf("%d %d %d", &n, &l, &r);
+    if(head == NULL){
+        head = newNode;
+    }
+    else{
+        node* start = head;
+        while(start->next != NULL){
+            start = start->next;
+        }
+        start->next = newNode;
+    }
+}
 
-        if(n > 47) n = 46 + (n % 2);
+void delete_node(int val){
+    node *start = head, *prev, *curr, *temp;
 
-        for(int i=l; i<=r; i++){
-            nowIndex = i;
-            buffer = n;
+    if(start->data == val){
+        temp = start;
+        start = start->next;
+        free(temp);
+    }
+    else{
+        prev = start;
+        curr = start->next;
 
-            while(buffer >= 4){
-                minus = 0;
-
-                if(buffer % 2){
-                    if(nowIndex < fib[buffer / 2 - 1][1]){
-                        buffer -= 2;
-                        continue;
-                    }
-                    minus += fib[buffer / 2 - 1][1];
-                }
-
-                for(int j=0; j<2; j++){
-                    if(nowIndex < minus + fib[buffer / 2 - 1][j]){
-                        buffer = buffer - 2 - (buffer % 2) + j;
-                        nowIndex -= minus;
-
-                        break;
-                    }
-
-                    minus += fib[buffer / 2 - 1][j];
-                }
-            }
-
-            printf("%c", BFSs[buffer][nowIndex]);
+        while(curr != NULL && curr->data != val){
+            prev = curr;
+            curr = curr->next;
         }
 
-        printf("\n");
+        if(curr == NULL){
+            printf("Not found QQ.\n");
+        }
+        else{
+            temp = curr;
+            prev->next = curr->next;
+            free(temp);
+        }
     }
+
+    head = start;
+    
+}
+
+
+int main(){
+    // test linked list
+    insert_node(1);
+    insert_node(2);
+    insert_node(3);
+    insert_node(4);
+    insert_node(5);
+    insert_node(6);
+    print_list();
+
+    delete_node(3);
+    print_list();
+
+    insert_node(10);
+    print_list();
+
+    delete_node(1);
+    print_list();
 }
