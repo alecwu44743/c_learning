@@ -93,4 +93,13 @@ int main(){
 
     delete_node(1);
     print_list();
+
+    delete_node(2);
+    print_list();
+
+    delete_node(6);
+    print_list();
+
+    delete_node(1000);
+    print_list();
 }
