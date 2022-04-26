@@ -11,7 +11,8 @@ int main(){
             b = temp;
         }
 
-        for(int i=b; i>=a; i--){
+        int i;
+        for(i=b; i>=a; i--){
             printf("%d ", i);
         }
         printf("\n");
