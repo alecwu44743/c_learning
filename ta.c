@@ -61,7 +61,7 @@ void delete_node(int val){
         }
 
         if(curr == NULL){
-            printf("Not found QQ.\n");
+            printf("%d Not found QQ.\n", val);
         }
         else{
             temp = curr;
