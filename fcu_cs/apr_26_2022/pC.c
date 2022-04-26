@@ -1,3 +1,6 @@
+// UVa 579: ClockHands
+// https://onlinejudge.org/external/5/579.pdf
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -19,7 +22,7 @@ int main(){
         if(hh == 0 && mm == 0){
             break;
         }
-        
+
         double angle = (hh * 30 + mm * 0.5) - (mm * 6); 
         if(angle < 0){
             angle += 360;
