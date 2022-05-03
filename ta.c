@@ -1,105 +1,60 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<ctype.h>
+#include<string.h>
+#include<stdbool.h>
 
-struct node{
-    int data;
-    struct node *next;
-};
-typedef struct node node;
+char str[1000];
+char var[100];
+char op[100];
+int num[100];
 
-node* head = NULL;
-
-void print_list(){
-    if(head == NULL){
-        printf("List is empty.\n");
-    }
-    else{
-        node *start = head;
-
-        while(start != NULL){
-            printf("%d--> ", start->data);
-            start = start->next;
-        }
-        printf("NULL\n");
-    }
+int number(char n){
+    return n >= '0' && n<= '9';
 }
 
-void insert_node(int val){
-    node* newNode;
-
-    newNode = (node *)malloc(sizeof(node));
-    newNode->data = val;
-    newNode->next = NULL;
-
-    if(head == NULL){
-        head = newNode;
-    }
-    else{
-        node* start = head;
-        while(start->next != NULL){
-            start = start->next;
-        }
-        start->next = newNode;
-    }
+int operator(char k){
+    return k == '+' || k == '-' || k == '*' || k == '/';
 }
-
-void delete_node(int val){
-    node *start = head, *prev, *curr, *temp;
-
-    if(start->data == val){
-        temp = start;
-        start = start->next;
-        free(temp);
-    }
-    else{
-        prev = start;
-        curr = start->next;
-
-        while(curr != NULL && curr->data != val){
-            prev = curr;
-            curr = curr->next;
-        }
-
-        if(curr == NULL){
-            printf("%d Not found QQ.\n", val);
-        }
-        else{
-            temp = curr;
-            prev->next = curr->next;
-            free(temp);
-        }
-    }
-
-    head = start;
-    
-}
-
 
 int main(){
-    // test linked list
-    insert_node(1);
-    insert_node(2);
-    insert_node(3);
-    insert_node(4);
-    insert_node(5);
-    insert_node(6);
-    print_list();
-
-    delete_node(3);
-    print_list();
-
-    insert_node(10);
-    print_list();
-
-    delete_node(1);
-    print_list();
-
-    delete_node(2);
-    print_list();
-
-    delete_node(6);
-    print_list();
-
-    delete_node(1000);
-    print_list();
+    while(scanf("%[^\n]",str) != EOF){
+        getchar();
+        int index = 0;
+        int ccase = 0;
+        int num = 0;
+        int sign = 1;
+        for(int i=0;i<strlen(str);i++){
+            if(ccase == 0){
+                if(str[i] == '+' || str[i] == '-' || number(str[i])){
+                    ccase = 1;
+                    if(str[i] == '+'){
+                        sign = 1;
+                    }
+                    else if(str[i] == '-'){
+                        sign = -1;
+                    }
+                    else{
+                        num = str[i] - '0';
+                    }
+                }
+            }
+            else if(ccase == 1){
+                if(str[i] == ' ' || str[i] == '=' || operator(str[i])){
+                    // num[index] = num*sign; - error  
+                    sign = 1;
+                    num = 0;
+                    if(str[i] == ' '){
+                        ccase = 0;
+                    }
+                    else if(str[i] == '='){
+                        
+                    }
+                    else{
+                        ccase = 2;
+                    }
+                }
+            }
+        }
+    }
 }
