@@ -1,3 +1,6 @@
+// 11054 - Wine trading in Gergovia
+// https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=1995
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
