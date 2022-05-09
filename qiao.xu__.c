@@ -18,7 +18,7 @@ int main(){
         printf("\n");
 
         int pass = 0;
-        for(int i=strlen(str)-1; i>=0; i--){
+        for(int i=0; i<strlen(str); i++){
             for(int j=0; j<strlen(str)-1-i; j++){
                 if(str[j] > str[j+1]){
                     char tmp = str[j];
@@ -26,7 +26,7 @@ int main(){
                     str[j+1] = tmp;
 
                     pass++;
-                    printf("%2d pass =>", pass);
+                    printf("%-2d pass =>", pass);
                     for(int k=0; k<strlen(str); k++){
                         printf("%c ", str[k]);
                     }
