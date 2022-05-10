@@ -10,19 +10,27 @@ typedef struct node{
 Node* head = NULL;
 
 void print_list(){
-    Node *np = head;
+    // if(head == NULL){
+    //     printf("List is empty.\n");
+    // }
+    // else{
+        int p = 0;
+        Node *start = head;
 
-    if(np == NULL){
-        // printf("List is empty.\n");
-        return;
-    }
-    else{
-        while(np != NULL){
-            printf("%u\n", np->data);
-            np = np->next;
+        // cannot end with a space
+        while(start != NULL){
+            if(p == 0){
+                printf("%d", start->data);
+                p++;
+            }
+            else{
+                printf("\n%d", start->data);
+            }
+            start = start->next;
         }
-        // printf("NULL\n");
-    }
+        // printf("NULL");
+    // }
+    // printf("\n");
 }
 
 void insert_list(unsigned int val){
@@ -54,41 +62,49 @@ void insert_list(unsigned int val){
     head = start;
 }
 
-unsigned int b_mod_m(char *b, unsigned int m){
-    unsigned int val = 0;
+// unsigned int b_mod_m(char *b, unsigned int m){
+//     unsigned int val = 0;
 
-    for(int i=0; i<strlen(b); i++){
-        val = val*10 + (b[i] - '0');
-        val %= m;
+//     for(int i=0; i<strlen(b); i++){
+//         val = val*10 + (b[i] - '0');
+//         val %= m;
+//     }
+
+//     return val;
+// }
+
+long long int b_pow_p_mod_m(long long int b, long long int p, long long int m){
+    int ans = 1;
+    int x = b%m;
+
+    while(p > 0){
+        if(p&1){
+            ans = (ans * x) % m;
+        }
+
+        x = (x * x) % m;
+        p >>= 1;
     }
 
-    return val;
-}
-
-void b_pow_p_mod_m(char *b, unsigned int p, unsigned int m){
-    unsigned int ans = b_mod_m(b, m);
-    unsigned int mVal = ans;
-
-    for(unsigned int i=1; i<p; i++){
-        ans = (ans*mVal) % m;
-    }
-
-    insert_list(ans);
+    return ans % m;
 }
 
 
 int main(){
-    char b[100];
-    unsigned int p;
-    unsigned int m;
+    long long int  b;
+    long long int  p;
+    long long int  m;
 
-    while(scanf("%s %u %u", b, &p, &m) != EOF){
+    while(scanf("%lld %lld %lld", &b, &p, &m) != EOF){
         getchar();
 
-        if(b[0]=='0' && p==0 && m==0){
+        if(b==0 && p==0 && m==0){
             break;
         }
-        b_pow_p_mod_m(b, p, m);
+        
+        // printf("%lld\n", b_pow_p_mod_m(b, p, m));
+        insert_list(b_pow_p_mod_m(b, p, m));
+
     }
 
     print_list();
