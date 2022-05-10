@@ -3,7 +3,7 @@
 #include <string.h>
 
 typedef struct node{
-    unsigned int data;
+    long long int data;
     struct node* next;
 }Node;
 
@@ -20,17 +20,17 @@ void print_list(){
         // cannot end with a space
         while(start != NULL){
             if(p == 0){
-                printf("%d", start->data);
+                printf("%lld", start->data);
                 p++;
             }
             else{
-                printf("\n%d", start->data);
+                printf("\n%lld", start->data);
             }
             start = start->next;
         }
         // printf("NULL");
     // }
-    // printf("\n");
+    printf("\n");
 }
 
 void insert_list(unsigned int val){
@@ -62,20 +62,9 @@ void insert_list(unsigned int val){
     head = start;
 }
 
-// unsigned int b_mod_m(char *b, unsigned int m){
-//     unsigned int val = 0;
-
-//     for(int i=0; i<strlen(b); i++){
-//         val = val*10 + (b[i] - '0');
-//         val %= m;
-//     }
-
-//     return val;
-// }
-
 long long int b_pow_p_mod_m(long long int b, long long int p, long long int m){
     int ans = 1;
-    int x = b%m;
+    long long int x = b%m;
 
     while(p > 0){
         if(p&1){
