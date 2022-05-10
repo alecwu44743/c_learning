@@ -1,3 +1,7 @@
+// 374 - Big Mod
+// https://onlinejudge.org/index.php?option=onlinejudge&Itemid=8&page=show_problem&problem=310
+// Reference: https://hwchang0417.wordpress.com/2018/12/17/uva-374-big-mod/amp/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -10,30 +14,16 @@ typedef struct node{
 Node* head = NULL;
 
 void print_list(){
-    // if(head == NULL){
-    //     printf("List is empty.\n");
-    // }
-    // else{
-        int p = 0;
-        Node *start = head;
+    Node *start = head;
 
-        // cannot end with a space
-        while(start != NULL){
-            if(p == 0){
-                printf("%lld", start->data);
-                p++;
-            }
-            else{
-                printf("\n%lld", start->data);
-            }
-            start = start->next;
-        }
-        // printf("NULL");
-    // }
-    printf("\n");
+    // cannot end with a space
+    while(start != NULL){
+        printf("%lld\n", start->data);
+        start = start->next;
+    }
 }
 
-void insert_list(unsigned int val){
+void insert_list(long long int val){
     Node *start = head;
     Node *newNode, *prev, *curr;
 
