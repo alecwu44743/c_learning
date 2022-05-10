@@ -16,7 +16,6 @@ int main(){
     int kickedoff[20];
 
     while(scanf("%d", &t) != EOF){
-
             while(t--){
             scanf("%d", &n);
             getchar();
@@ -117,7 +116,7 @@ int main(){
 
             if(t) printf("\n"); // cout << '\n';
         }
-        
+
     }
     
 
