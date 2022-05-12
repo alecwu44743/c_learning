@@ -3444,10 +3444,42 @@ void oj_fcu(){
 // printf("%d\n", index);
 // printf("%s\n", ans);
 
+void b759(){
+    char str[1005];
+
+    while(scanf("%s", str) != EOF){
+        for(int i=0; i<strlen(str); i++){
+            char *start = str+i;
+            char *end;
+
+            while(*start != '\0'){
+                printf("%c", *start);
+                start++;
+            }
+
+            end = str+i;
+            start = str;
+
+            while(start!=end && str!='\0'){
+                printf("%c", *start);
+                start++;
+            }
+
+            printf("\n");
+        }
+    }
+}
+
+
+void zerojudge(){
+    b759();
+}
+
 int main(){
     // diediedeanita();
 
-    oj_fcu();
+    // oj_fcu();
+    zerojudge();
     // execution_time();
     // isPrime();
 
