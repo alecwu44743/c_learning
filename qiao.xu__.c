@@ -42,9 +42,7 @@ int main(){
 
     printf("Please enter blablabla...: ");
 
-    if(scanf("%s", str) == EOF){
-        break;
-    }
+    scanf("%s", str);
     printf("This is student ID: %s... midterm exam blablabla...\n", str);
     
     printf("Please enter f1(x) blablabla...: n=4: ");
