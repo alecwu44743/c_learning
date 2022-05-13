@@ -3,47 +3,79 @@
 #include <string.h>
 #include <math.h>
 
-int bubble_sort(char *str){
-    int pass = 0;
+#define N 4
 
-    for(int i=0; i<strlen(str); i++){
-        for(int j=0; j<strlen(str)-1-i; j++){
-            if(str[j] > str[j+1]){
-                char tmp = str[j];
-                str[j] = str[j+1];
-                str[j+1] = tmp;
+int f1Arr[N+1];
+int f2Arr[N+1];
+int ans[2*N+1] = {0};
 
-                pass++;
-                printf("%-2d pass =>", pass);
-                for(int k=0; k<strlen(str); k++){
-                    printf("%c ", str[k]);
-                }
-                printf("\n");
-            }
+
+void arrMultipl(){
+    for(int i=0; i<N+1; i++){
+        for(int j=0; j<N+1; j++){
+            ans[i+j] += f1Arr[i] * f2Arr[j]; 
         }
     }
 
-    return pass;
+    printf("f1 * f2 = %d^%d", ans[N*2], N*2);
+    for(int i=N*2; i>0; i--){
+        if(ans[i] >= 0){
+            printf(" + %dx^%d", ans[i], i);
+        }
+        else{
+            printf(" - %dx^%d", abs(ans[i]), i);
+        }
+    }
+    if(ans[0] >= 0){
+        printf(" + %d\n", ans[0]);
+    }
+    else{
+        printf(" - %d\n", abs(ans[0]));
+    }
 }
-
 
 int main(){
 
-    char str[1000];
+    char str[9];
 
-    printf("Please enter blablabla....: ");
-    while(scanf("%[^\n]", str) != EOF){
-        getchar();
+    while(1){
+        printf("Please enter blablabla...:");
 
-        for(int i=0; i<strlen(str); i++){
-            printf("%c ", str[i]);
+        if(scanf("%s", str) == EOF){
+            break;
         }
-        printf("\n");
+        printf("This is student ID: %s... midterm exam blablabla...\n", str);
+        
+        printf("Please enter f1(x) blablabla...: n=4 ");
+        for(int i=0; i<N; i++){
+            scanf("%d", &f1Arr[i]);
+            getchar();
+            getchar();
+        }
+        scanf("%d", &f1Arr[4]);
 
-        int ps = bubble_sort(str);
-        printf("%d\n", ps);
+        printf("Please enter f2(x) blablabla...: n=4 ");
+        for(int i=0; i<N; i++){
+            scanf("%d", &f2Arr[i]);
+            getchar();
+            getchar();
+        }
+        scanf("%d", &f2Arr[4]);
 
-        printf("Please enter blablabla....: ");
+        printf("F1(x)=");
+        for(int i=4; i>0; i--){
+            printf(" %dx^%d", f1Arr[i], i);
+        }
+        printf(" %d,\n", f1Arr[0]);
+
+        printf("F2(x)=");
+        for(int i=4; i>0; i--){
+            printf(" %dx^%d", f2Arr[i], i);
+        }
+        printf(" %d\n", f2Arr[0]);
+
+
+        arrMultipl();
     }
 
 }
