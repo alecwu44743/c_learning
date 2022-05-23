@@ -13,17 +13,20 @@ int main(){
 
     // ex.2
     m_pointer = (int*)malloc(sizeof(int));
-    printf("Ans2: m pointer is initially allocated at %p and its original content is %d.\n", &m_pointer, m_pointer);
+    printf("Ans2: m_pointer is initially allocated at %p and its original content is %d.\n", &m_pointer, m_pointer);
     printf("\n");
     
 
     // ex.3
-    printf("Ans3: try it yourself, it's not too difficult, beauty. ;)\n");
-    printf("\n");
+    printf("Ans3: No.moemory allocation is successful only when malloc()returns non-NULL value.\n");
+    printf("      Now, since m_pointer !=NULL, the dynamic memory allocation was successful.\n");
+    printf("      Assigning 20 to the location pointed by m_pointer,and now the m_pointer=%d",m_pointer);
+    printf("\n\n");
 
 
     // ex.4
-    printf("Ans4: try it yourself, it's not too difficult, beauty. ;)\n");
+    printf("Ans4: We should be careful about if the malloc() returned a NULL pointer or not to cheeck if malloc() was successful or not! \n");
+    printf("      Also, the contents in the newly allocated memory space should be initialized before they are used. \n");
     printf("\n");
 
 
@@ -48,6 +51,6 @@ int main(){
 
     // ex.7
     printf("Ans7: c_array + 1 = %p, int_pointer + 1 = %p, float_pointer + 1 = %p, double_pointer + 1 = %p\n", c_array+1, int_pointer+1, float_pointer+1, double_pointer+1);
-    printf("The size of int = %d, the size of char = %d, the size of float = %d, the size of double = %d\n", sizeof(int), sizeof(char), sizeof(float), sizeof(double));
-    printf("Conclusion here ;) \n");
+    printf("      The size of int = %d, the size of char = %d, the size of float = %d, the size of double = %d\n", sizeof(int), sizeof(char), sizeof(float), sizeof(double));
+    printf("      Increment different data type pointer by 1 actually add the size of that data type in btes!\n");
 }

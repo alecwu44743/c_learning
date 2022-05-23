@@ -1,17 +1,20 @@
-Ans1: m=200 at it is allocated at 0x7ff7b115636c.
+Ans1: m=200 at it is allocated at 0x7ff7bf68736c.
 
-Ans2: m pointer is initially allocated at 0x7ff7b1156360 and its original content is 63995904.
+Ans2: m_pointer is initially allocated at 0x7ff7bf687360 and its original content is 16416832.
 
-Ans3: try it yourself, it's not too difficult, beauty. ;)
+Ans3: No.moemory allocation is successful only when malloc()returns non-NULL value.
+      Now, since m_pointer !=NULL, the dynamic memory allocation was successful.
+      Assigning 20 to the location pointed by m_pointer,and now the m_pointer=16416832
 
-Ans4: try it yourself, it's not too difficult, beauty. ;)
+Ans4: We should be careful about if the malloc() returned a NULL pointer or not to cheeck if malloc() was successful or not! 
+      Also, the contents in the newly allocated memory space should be initialized before they are used. 
 
-Ans5: The c_array[13] is allocated at 0x7ff7b1156373, and *c_array = H
-      c_array[0] = 0x7ff7b1156373, c_array[1] = 0x7ff7b1156374, c_array[2] = 0x7ff7b1156375, c_array[3] = 0x7ff7b1156376, c_array[4] = 0x7ff7b1156377
+Ans5: The c_array[13] is allocated at 0x7ff7bf687373, and *c_array = H
+      c_array[0] = 0x7ff7bf687373, c_array[1] = 0x7ff7bf687374, c_array[2] = 0x7ff7bf687375, c_array[3] = 0x7ff7bf687376, c_array[4] = 0x7ff7bf687377
 
-Ans6: Now, int_pointer = 0x7ff7b1156373, float_pointer = 0x7ff7b1156373, double_pointer = 0x7ff7b1156373
+Ans6: Now, int_pointer = 0x7ff7bf687373, float_pointer = 0x7ff7bf687373, double_pointer = 0x7ff7bf687373
       *c_array as a string = Hello World!, *int_pointer = 1819043144 (0x6c6c6548), *float_pointer = 1143139122437582505939828736.000000
 
-Ans7: c_array + 1 = 0x7ff7b1156374, int_pointer + 1 = 0x7ff7b1156377, float_pointer + 1 = 0x7ff7b1156377, double_pointer + 1 = 0x7ff7b115637b
-The size of int = 4, the size of char = 1, the size of float = 4, the size of double = 8
-Conclusion here ;) 
+Ans7: c_array + 1 = 0x7ff7bf687374, int_pointer + 1 = 0x7ff7bf687377, float_pointer + 1 = 0x7ff7bf687377, double_pointer + 1 = 0x7ff7bf68737b
+      The size of int = 4, the size of char = 1, the size of float = 4, the size of double = 8
+      Increment different data type pointer by 1 actually add the size of that data type in btes!
