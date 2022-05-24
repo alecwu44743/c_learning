@@ -12,7 +12,7 @@ int main(){
     char x[12];
     char y[12];
 
-    while(scanf("%s %s", x, y)){
+    while(scanf("%s %s", x, y) != EOF){
         if(strcmp(x, "0") == 0 && strcmp(y, "0") == 0) break;
         if(strlen(x) > 10 || strlen(y) > 10){
             printf("Out of scope.\n");
@@ -31,6 +31,8 @@ int main(){
                 carry++;
                 buffer = sum/10;
             }
+
+            // printf("sum = %d, carry = %d, buffer = %d\n", sum, carry, buffer);
         }
         
         if (carry == 0){
