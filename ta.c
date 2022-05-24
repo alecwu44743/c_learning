@@ -10,16 +10,16 @@ int deal(int n){
         n/=10;
         tmp++;
     }
-    printf(" %d \n",tmp);
+    // printf(" %d \n",tmp);
     return tmp > 10;
 }
 
 int main(){
-    int a,b;
-    while(scanf("%d %d",&a,&b)&& a!=0 && b!=0){
+    long long int a,b;
+    while(scanf("%lld %lld",&a,&b)&& a!=0 && b!=0){
         int cnt=0;
-        printf(" %d %d \n",deal(a),deal(b));
-        if(deal(a)||deal(b)){
+        // printf(" %d %d \n",deal(a),deal(b));
+        if(a > 9999999999 || b > 9999999999){
             printf("Out of scope.\n");
             continue;
         }
