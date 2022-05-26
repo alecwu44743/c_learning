@@ -48,7 +48,7 @@ void tree_insert(int op, int val){
                     prev->left = newNode;
                     return;
                 }
-            }
+            }   
             else{
                 return;
             }
