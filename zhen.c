@@ -104,6 +104,8 @@ int main(){
             print(root);
             printf("\n");
             a = 0;
+
+            printf("root: %d\n", root->data);
         }
     }
 }
