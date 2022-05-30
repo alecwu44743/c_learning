@@ -21,9 +21,9 @@ void tran(int** a, int b, int c)
 		for (j = 0; j < c; j++)
 		{
 			printf("%d\t", *(int*)((int*)(a)+j * c + i));
-			printf("\n");
 
 		}
+		printf("\n");
 		
 	}
 	
@@ -37,8 +37,9 @@ void printmat(int** a, int b, int c)
 		for (j = 0; j < c; j++)
 		{
 			printf("%d\t", *(int*)((int*)(a)+j * c + i));
-			printf("\n");
+			
 		}
+		printf("\n");
 		
 	}
 }
@@ -82,7 +83,7 @@ int main(void)
 	tran((int**)A, 4, 4);
 	printf("B=\n");
 	tran((int**)B, 4, 4);
-	printf("D=AxB");
+	printf("D=AxB\n");
 	mul(A, B, D);
 	tran((int**)A, 4, 4);
 
