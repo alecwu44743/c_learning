@@ -1,4 +1,4 @@
-// UVA12820 Cool Word - CPE
+// UVA12820 Cool Word
 // https://cpe.cse.nsysu.edu.tw/cpe/file/attendance/problemPdf/12820.pdf
 
 #include <stdlib.h>
