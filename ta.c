@@ -4,37 +4,28 @@
 #include<string.h>
 #include<ctype.h>
 
-int deal(int n){
-    int tmp=0;
-    while(n!=0){
-        n/=10;
-        tmp++;
+void guess(char ans){
+    char input;
+
+    while(scanf("%c", &input)){
+             
+        if(input < ans){
+            printf("%s\n", "TOO SMALL!");
+        }
+        else if(input > ans){
+            printf("%s\n", "TOO BIG!");
+        }
+        else{
+            printf("%s\n", "GOOD!");
+            break;
+        }
+        getchar();
     }
-    // printf(" %d \n",tmp);
-    return tmp > 10;
 }
 
 int main(){
-    long long int a,b;
-    while(scanf("%lld %lld",&a,&b)&& a!=0 && b!=0){
-        int cnt=0;
-        // printf(" %d %d \n",deal(a),deal(b));
-        if(a > 9999999999 || b > 9999999999){
-            printf("Out of scope.\n");
-            continue;
-        }
+    char str[4] = {'C', 'D', 'H', 'S'};
+    int i = rand()%4;
 
-        int n=0;
-        while (a!=0 || b!=0){
-            n=a%10 + b%10 + n/10;
-            if(n>9){
-                cnt++;
-            }
-            a/=10;
-            b/=10;
-        }
-        if(cnt == 0) printf("No carry operation.\n");
-        else if(cnt == 1) printf("1 carry operation.\n");
-        else printf("%d carry operations.\n",cnt);
-    }
+    guess(str[i]);
 }
