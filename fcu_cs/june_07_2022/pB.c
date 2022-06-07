@@ -34,7 +34,7 @@ int main(){
             printf("Case #%llu: No beer for the captain.\n",ccase++);
         }
 
-        if(ccase == 24) printf("\n"); // There is an error in the testing case
+        // if(ccase == 24) printf("\n"); // There is an error in the testing case
 
         unsigned long long time = d*vv + dd*v;
         unsigned long long mo = v*vv*2;
