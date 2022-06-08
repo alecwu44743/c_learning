@@ -83,6 +83,19 @@ void delete_list(int val){
     head = start;
 }
 
+// search the element by recursional way
+int search_recursive(Node *head, int val){
+    if(head == NULL){
+        return false;
+    }
+
+    if(head->data == val){
+        return true;
+    }
+
+    return search_recursive(head->next, val);
+}
+
 void reverse_list(){
     Node *prev, *curr, *next;
 
