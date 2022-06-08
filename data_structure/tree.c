@@ -79,6 +79,28 @@ void tree_search(int val){
     printf("[%d] Element found.\n", val);
 }
 
+void tree_search_sol2(int val){
+    Node *curr = root;
+
+    while(curr->data != val){
+
+        if(val < curr->data){
+            curr = curr->left;
+        }
+        else if(val > curr->data){
+            curr = curr->right;
+        }
+
+        if(curr == NULL){
+            printf("(Oops, %d not found)\n", val);
+            return;
+            // return NULL;
+        }
+    }
+
+    printf("%d found at %p.\n", val, &curr);
+}
+
 void tree_delete(int val){
     Node *curr = root;
     Node *prev = NULL;
@@ -195,6 +217,11 @@ int main(){
     tree_insert(200);
     tree_inOrder(root);
     printf("\n");
+
+    tree_search_sol2(27);
+    tree_search_sol2(42);
+    tree_search_sol2(19);
+    tree_search_sol2(100);
 
     tree_delete(19);
     tree_delete(14);
