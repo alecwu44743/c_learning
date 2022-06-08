@@ -84,13 +84,15 @@ void delete_list(int val){
 }
 
 // search the element by recursional way
-int search_recursive(Node *head, int val){
+void search_recursive(Node *head, int val){
     if(head == NULL){
-        return false;
+        printf("%d not found.\n", val);
+        return;
     }
 
     if(head->data == val){
-        return true;
+        printf("%d found, at %p.\n", val, &head);
+        return;
     }
 
     return search_recursive(head->next, val);
@@ -141,4 +143,8 @@ int main(){
 
     reverse_list();
     print_list();
+
+    search_recursive(head, 10);
+    search_recursive(head, 20);
+
 }
