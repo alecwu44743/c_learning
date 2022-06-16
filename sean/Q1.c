@@ -178,6 +178,7 @@ void delete_all_matrices(){
     for(int i=0; i<matrix_amount; i++){
         if(mx[i].deleted == 0){
             free(mx[i].data);
+            strcpy(mx[i].name, "");
             mx[i].deleted = 1;
         }
     }
@@ -226,6 +227,11 @@ void add_a_matrix(char resArr, char arr, int r, int rr, int c, int cc){
         }
     }
 
+    if(r < 0 || c < 0 || rr > mx[findmx].row || cc > mx[findmx].col){
+        printf("Error: invalid matrix index.\n");
+        return;
+    }
+
     if(findmx == -1){
         printf("Matrix not found QQ.\n");
         return;
@@ -269,8 +275,95 @@ void add_a_matrix(char resArr, char arr, int r, int rr, int c, int cc){
 }    
 
 
-void plus_matrix(char resArr, char opA, char opB){
-    
+void plus_and_minus_matrix(char resArr, char opA, char opB, char op){
+    int isResArrExist = -1;
+    int isOpAExist = -1;
+    int isOpBExist = -1;
+
+    for(int i=0; i<matrix_amount; i++){
+        if(mx[i].name[0] == resArr && mx[i].deleted == 0){
+            isResArrExist = i;
+        }
+
+        if(mx[i].name[0] == opA && mx[i].deleted == 0){
+            isOpAExist = i;
+        }
+
+        if(mx[i].name[0] == opB && mx[i].deleted == 0){
+            isOpBExist = i;
+        }
+
+        if(isResArrExist != -1 && isOpAExist != -1 && isOpBExist != -1){
+            break;
+        }
+    }
+
+    if(isOpAExist == -1){
+        printf("Matrix not found QQ.\n");
+        return;
+    }
+
+    if(isOpBExist == -1){
+        printf("Matrix not found QQ.\n");
+        return;
+    }
+
+    if(mx[isOpAExist].row != mx[isOpBExist].row || mx[isOpAExist].col != mx[isOpBExist].col){
+        printf("Matrix size not match QQ.\n");
+        return;
+    }
+
+    if(isResArrExist == -1){
+        strncat(mx[matrix_amount].name, &resArr, 1);
+        mx[matrix_amount].row = mx[isOpAExist].row;
+        mx[matrix_amount].col = mx[isOpBExist].col;
+        mx[matrix_amount].data = malloc(sizeof(double)*mx[matrix_amount].row*mx[matrix_amount].col);
+        mx[matrix_amount].deleted = 0;
+
+        for(int i=0; i<mx[matrix_amount].row; i++){
+            for(int j=0; j<mx[matrix_amount].col; j++){
+                if(op == '+'){
+                    mx[matrix_amount].data[i*mx[matrix_amount].col + j] = mx[isOpAExist].data[i*mx[isOpAExist].col + j] + mx[isOpBExist].data[i*mx[isOpBExist].col + j];
+                }
+                else if(op == '-'){
+                    mx[matrix_amount].data[i*mx[matrix_amount].col + j] = mx[isOpAExist].data[i*mx[isOpAExist].col + j] - mx[isOpBExist].data[i*mx[isOpBExist].col + j];
+                }
+            }
+        }
+
+        matrix_amount++;
+        return;
+    }
+
+    double *tempArr = malloc(sizeof(double)*mx[isOpAExist].row*mx[isOpAExist].col);
+
+    if(op == '+'){
+        for(int i=0; i<mx[isResArrExist].row; i++){
+            for(int j=0; j<mx[isResArrExist].col; j++){
+                tempArr[i*mx[isResArrExist].col + j] = mx[isOpAExist].data[i*mx[isOpAExist].col + j] + mx[isOpBExist].data[i*mx[isOpBExist].col + j];
+            }
+        }
+    }
+    else if(op == '-'){
+        for(int i=0; i<mx[isResArrExist].row; i++){
+            for(int j=0; j<mx[isResArrExist].col; j++){
+                tempArr[i*mx[isResArrExist].col + j] = mx[isOpAExist].data[i*mx[isOpAExist].col + j] - mx[isOpBExist].data[i*mx[isOpBExist].col + j];
+            }
+        }
+    }
+
+    mx[isResArrExist].data = malloc(sizeof(double)*mx[isResArrExist].row*mx[isResArrExist].col);
+
+    mx[isResArrExist].row = mx[isOpAExist].row;
+    mx[isResArrExist].col = mx[isOpBExist].col;
+
+    for(int i=0; i<mx[isResArrExist].row; i++){
+        for(int j=0; j<mx[isResArrExist].col; j++){
+            mx[isResArrExist].data[i*mx[isResArrExist].col + j] = tempArr[i*mx[isResArrExist].col + j];
+        }
+    }
+
+    free(tempArr);
 }
 
 
@@ -320,6 +413,8 @@ void be_minOrpls_matrix(char resArr, char opA, char op){
         return;
     }
 
+    mx[isResArrExist].data = malloc(sizeof(double)*mx[isOpAExist].row*mx[isOpAExist].col);
+
     if(op == '-'){
         for(int i=0; i<mx[isResArrExist].row; i++){
             for(int j=0; j<mx[isResArrExist].col; j++){
@@ -327,6 +422,113 @@ void be_minOrpls_matrix(char resArr, char opA, char op){
             }
         }
     }
+    else if(op == '+'){
+        for(int i=0; i<mx[isResArrExist].row; i++){
+            for(int j=0; j<mx[isResArrExist].col; j++){
+                mx[isResArrExist].data[i*mx[isResArrExist].col + j] = mx[isOpAExist].data[i*mx[isOpAExist].col + j];
+            }
+        }
+    }
+}
+
+
+void multiply_matrix(char resArr, char opA, char opB){
+    int isOpAExist = -1;
+    int isOpBExist = -1;
+    int isResArrExist = -1;
+
+    for(int i=0; i<matrix_amount; i++){
+        if(mx[i].name[0] == opA && mx[i].deleted == 0){
+            isOpAExist = i;
+        }
+
+        if(mx[i].name[0] == opB && mx[i].deleted == 0){
+            isOpBExist = i;
+        }
+
+        if(mx[i].name[0] == resArr && mx[i].deleted == 0){
+            isResArrExist = i;
+        }
+
+        if(isOpAExist != -1 && isOpBExist != -1 && isResArrExist != -1) break;
+    }
+
+    if(isOpAExist == -1 || isOpBExist == -1){
+        printf("Matrix not found QQ.\n");
+        return;
+    }
+
+    if(mx[isOpAExist].col != mx[isOpBExist].row){
+        printf("Matrix not compatible QQ.\n");
+        return;
+    }
+
+    if(isResArrExist == -1){
+        strncat(mx[matrix_amount].name, &resArr, 1);
+        mx[matrix_amount].row = mx[isOpAExist].row;
+        mx[matrix_amount].col = mx[isOpBExist].col;
+        // mx[matrix_amount].data = malloc(sizeof(double) * mx[matrix_amount].row * mx[matrix_amount].col);
+
+        // for(int i=0; i<mx[matrix_amount].row; i++){
+        //     for(int j=0; j<mx[matrix_amount].col; j++){
+        //         double temp = 0;
+        //         for(int k=0; k<mx[isOpAExist].col; k++){
+        //             temp += mx[isOpAExist].data[i*mx[isOpAExist].col + k] * mx[isOpBExist].data[k*mx[isOpBExist].col + j];
+        //         }
+        //         mx[matrix_amount].data[i*mx[matrix_amount].col + j] = temp;
+        //     }
+        // }
+
+        // printf("ccccc\n");
+
+        // if(mx[matrix_amount].data == NULL){
+        //     printf("Memory error QQ.\n");
+        //     return;
+        // }
+
+        printf("aaaa\n");
+
+        int r = 8, c = 5, i, j, count;
+ 
+        double **arr = (double**)malloc(r * sizeof(double*) + r*c*sizeof(double));
+
+        printf("ok");
+            
+        for(int i=0; i<mx[isOpAExist].row; i++){
+            for(int j=0; j<mx[isOpBExist].col; j++){
+                arr[i][j] = 0;
+                for(int k=0; k<mx[isOpBExist].row; k++){
+                    arr[i][j] += mx[isOpAExist].data[i*mx[isOpAExist].col + k] * mx[isOpBExist].data[k*mx[isOpBExist].col + j];
+                }
+            }
+        }
+
+        matrix_amount++;
+        return;
+    }
+
+    double *tempArr = malloc(sizeof(double)*mx[isOpAExist].row*mx[isOpBExist].col);
+
+    mx[isResArrExist].row = mx[isOpAExist].row;
+    mx[isResArrExist].col = mx[isOpBExist].col;
+
+    for(int i=0; i<mx[isResArrExist].row; i++){
+        for(int j=0; j<mx[isOpBExist].col; j++){
+            tempArr[i*mx[isOpBExist].col + j] = 0;
+            for(int k=0; k<mx[isOpAExist].col; k++){
+                tempArr[i*mx[isOpBExist].col + j] += mx[isOpAExist].data[i*mx[isOpAExist].col + k] * mx[isOpBExist].data[k*mx[isOpBExist].col + j];
+            }
+        }
+    }
+
+    for(int i=0; i<mx[isResArrExist].row; i++){
+        for(int j=0; j<mx[isResArrExist].col; j++){
+            mx[isResArrExist].data[i*mx[isResArrExist].col + j] = tempArr[i*mx[isResArrExist].col + j];
+        }
+    }
+
+
+    free(tempArr);
 }
 
 int main(){
@@ -422,6 +624,12 @@ int main(){
                 
                 if(operantA == '%'){
                     be_minOrpls_matrix(resArr, operantB, operator);
+                }
+                else if(operator == '+' || operator == '-'){
+                    plus_and_minus_matrix(resArr, operantA, operantB, operator);
+                }
+                else if(operator == '*'){
+                    multiply_matrix(resArr, operantA, operantB);
                 }
             }
             else{
