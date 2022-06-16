@@ -135,31 +135,103 @@ void print_all_matrix(){
 void print_all_matrix_status(){
     printf("Matrixes status: \n");
     printf("Name    rows    cols\n");
+
+    if(matrix_amount == 0){
+        printf("No matrixes\n");
+    }
+
     for(int i=0; i<matrix_amount; i++){
         printf(" %-6s %-7d %d\n", mx[i].name, mx[i].row, mx[i].col);
     }
 }
 
 
+void write_all_matrix(char *filename){
+    FILE *fp;
+    fp = fopen(filename, "w");
 
+    if(fp == NULL){
+        printf("Error "); // *TODO: change the error message
+        return;
+    }
+    else{
+        for(int i=0; i<matrix_amount; i++){
+            if(mx[i].deleted == 0){
+                fprintf(fp, "%s\n", mx[i].name);
+                fprintf(fp, "%d %d\n", mx[i].row, mx[i].col);
+                for(int j=0; j<mx[i].row; j++){
+                    for(int k=0; k<mx[i].col; k++){
+                        fprintf(fp, "%lf ", mx[i].data[j*mx[i].col + k]);
+                    }
+                    fprintf(fp, "\n");
+                }
+            }
+        }
+        fclose(fp);
+    }
+}
+
+
+void delete_all_matrices(){
+    for(int i=0; i<matrix_amount; i++){
+        free(mx[i].data);
+        mx[i].deleted = 1;
+    }
+
+    matrix_amount = 0;
+}
+
+
+void print_a_matrix(char *name){
+    for(int i=0; i<matrix_amount; i++){
+        if(strcmp(mx[i].name, name) == 0){
+            printf("%s", mx[i].name);
+            printf(" %d %d\n", mx[i].row, mx[i].col);
+            for(int j=0; j<mx[i].row; j++){
+                for(int k=0; k<mx[i].col; k++){
+                    printf("%15.5e ", mx[i].data[j*mx[i].col + k]);
+                }
+                printf("\n");
+            }
+            return;
+        }
+    }
+    printf("Matrix not found QQ.\n");
+}
 
 
 int main(){
-    char op[5];
+    char op[30];
+
+    printf("$ ");
 
     while(scanf("%s", op)){
-        if(!strcmp(op,"!!q")){
-            return 0;
-        }
+        if(!strcmp(op,"!!q")) return 0;
 
         if(!strcmp(op,"<")){
             scanf("%s", readFilename);
             read_the_file(readFilename);
             // print_all_matrix();
         }
+        else if(!strcmp(op,">")){
+            scanf("%s", writeFilename);
+            write_all_matrix(writeFilename);
+        }
         else if(!strcmp(op,"?")){
             print_all_matrix_status();
         }
+        else if(!strcmp(op,"!!d")){
+            delete_all_matrices();
+        }
+        else if(op[0] == '?'){
+            char to_print_mxName[10];
+            strcpy(to_print_mxName, op+1);
+
+            // printf("%s\n", to_print_mxName);
+            print_a_matrix(to_print_mxName);
+        } 
+        
+        printf("$ ");
     }
 
 }
