@@ -141,7 +141,9 @@ void print_all_matrix_status(){
     }
 
     for(int i=0; i<matrix_amount; i++){
-        printf(" %-6s %-7d %d\n", mx[i].name, mx[i].row, mx[i].col);
+        if(mx[i].deleted == 0){
+            printf(" %-6s %-7d %d\n", mx[i].name, mx[i].row, mx[i].col);
+        }
     }
 }
 
@@ -174,8 +176,10 @@ void write_all_matrix(char *filename){
 
 void delete_all_matrices(){
     for(int i=0; i<matrix_amount; i++){
-        free(mx[i].data);
-        mx[i].deleted = 1;
+        if(mx[i].deleted == 0){
+            free(mx[i].data);
+            mx[i].deleted = 1;
+        }
     }
 
     matrix_amount = 0;
@@ -184,12 +188,12 @@ void delete_all_matrices(){
 
 void print_a_matrix(char *name){
     for(int i=0; i<matrix_amount; i++){
-        if(strcmp(mx[i].name, name) == 0){
+        if(strcmp(mx[i].name, name) == 0 && mx[i].deleted == 0){
             printf("%s", mx[i].name);
             printf(" %d %d\n", mx[i].row, mx[i].col);
             for(int j=0; j<mx[i].row; j++){
                 for(int k=0; k<mx[i].col; k++){
-                    printf("%15.5e ", mx[i].data[j*mx[i].col + k]);
+                    printf("%lf ", mx[i].data[j*mx[i].col + k]); // *TODO : change the format
                 }
                 printf("\n");
             }
@@ -200,21 +204,150 @@ void print_a_matrix(char *name){
 }
 
 
+void delete_a_matrix(char *name){
+    for(int i=0; i<matrix_amount; i++){
+        if(strcmp(mx[i].name, name) == 0 && mx[i].deleted == 0){
+            free(mx[i].data);
+            mx[i].deleted = 1;
+            return;
+        }
+    }
+    printf("Matrix not found QQ.\n");
+}
+
+
+void add_a_matrix(char resArr, char arr, int r, int rr, int c, int cc){
+    int findmx = -1;
+
+    for(int i=0; i<matrix_amount; i++){
+        if(mx[i].name[0] == arr && mx[i].deleted == 0){
+            findmx = i;
+            break;
+        }
+    }
+
+    if(findmx == -1){
+        printf("Matrix not found QQ.\n");
+        return;
+    }
+
+    int isResArrExist = -1;
+    for(int i=0; i<matrix_amount; i++){
+        if(mx[i].name[0] == resArr && mx[i].deleted == 0){
+            isResArrExist = i;
+            break;
+        }
+    }
+
+    if(isResArrExist == -1){
+        strncat(mx[matrix_amount].name, &resArr, 1);
+        mx[matrix_amount].row = rr-r;
+        mx[matrix_amount].col = cc-c;
+        mx[matrix_amount].data = malloc(sizeof(double)*mx[matrix_amount].row*mx[matrix_amount].col);
+        mx[matrix_amount].deleted = 0;
+
+        for(int i=0; i<mx[matrix_amount].row; i++){
+            for(int j=0; j<mx[matrix_amount].col; j++){
+                mx[matrix_amount].data[i*mx[matrix_amount].col + j] = mx[findmx].data[(i+r)*mx[findmx].col + j+c];
+            }
+        }
+
+        matrix_amount++;
+    }
+    else{
+        mx[isResArrExist].data = malloc(sizeof(double)*(rr-r)*(cc-c));
+
+        mx[isResArrExist].row = rr-r;
+        mx[isResArrExist].col = cc-c;
+
+        for(int i=0; i<mx[isResArrExist].row; i++){
+            for(int j=0; j<mx[isResArrExist].col; j++){
+                mx[isResArrExist].data[i*mx[isResArrExist].col + j] += mx[findmx].data[(i+r)*mx[findmx].col + j+c];
+            }
+        }
+    }
+}    
+
+
+void plus_matrix(char resArr, char opA, char opB){
+    
+}
+
+
+void be_minOrpls_matrix(char resArr, char opA, char op){
+    int isOpAExist = -1;
+    int isResArrExist = -1;
+
+    for(int i=0; i<matrix_amount; i++){
+        if(mx[i].name[0] == opA && mx[i].deleted == 0){
+            isOpAExist = i;
+        }
+
+        if(mx[i].name[0] == resArr && mx[i].deleted == 0){
+            isResArrExist = i;
+        }
+
+        if(isOpAExist != -1 && isResArrExist != -1) break;
+    }
+    if(isOpAExist == -1){
+        printf("Matrix not found QQ.\n");
+        return;
+    }
+
+    if(isResArrExist == -1){
+        strncat(mx[matrix_amount].name, &resArr, 1);
+        mx[matrix_amount].row = mx[isOpAExist].row;
+        mx[matrix_amount].col = mx[isOpAExist].col;
+        mx[matrix_amount].data = malloc(sizeof(double)*mx[matrix_amount].row*mx[matrix_amount].col);
+        mx[matrix_amount].deleted = 0;
+
+        if(op == '+'){
+            for(int i=0; i<mx[matrix_amount].row; i++){
+                for(int j=0; j<mx[matrix_amount].col; j++){
+                    mx[matrix_amount].data[i*mx[matrix_amount].col + j] = mx[isOpAExist].data[i*mx[isOpAExist].col + j];
+                }
+            }
+        }
+        else if(op == '-'){
+            for(int i=0; i<mx[matrix_amount].row; i++){
+                for(int j=0; j<mx[matrix_amount].col; j++){
+                    mx[matrix_amount].data[i*mx[matrix_amount].col + j] = -mx[isOpAExist].data[i*mx[isOpAExist].col + j];
+                }
+            }
+        }
+
+        matrix_amount++;
+        return;
+    }
+
+    if(op == '-'){
+        for(int i=0; i<mx[isResArrExist].row; i++){
+            for(int j=0; j<mx[isResArrExist].col; j++){
+                mx[isResArrExist].data[i*mx[isResArrExist].col + j] = -mx[isOpAExist].data[i*mx[isOpAExist].col + j];
+            }
+        }
+    }
+}
+
 int main(){
     char op[30];
 
     printf("$ ");
 
-    while(scanf("%s", op)){
-        if(!strcmp(op,"!!q")) return 0;
+    while(scanf("%[^\n]", op) != EOF){
+        getchar();
+        if(!strcmp(op,"!!q")){
+            delete_all_matrices();
+            return 0;
+        }
 
-        if(!strcmp(op,"<")){
-            scanf("%s", readFilename);
+        if(op[0] == '<'){
+            strcpy(readFilename, op+2);
             read_the_file(readFilename);
             // print_all_matrix();
         }
-        else if(!strcmp(op,">")){
-            scanf("%s", writeFilename);
+        else if(op[0] == '>'){
+            strcpy(writeFilename, op+2);
             write_all_matrix(writeFilename);
         }
         else if(!strcmp(op,"?")){
@@ -230,6 +363,71 @@ int main(){
             // printf("%s\n", to_print_mxName);
             print_a_matrix(to_print_mxName);
         } 
+        else if(op[0] == '!'){
+            char to_delete_mxName[10];
+            strcpy(to_delete_mxName, op+1);
+
+            delete_a_matrix(to_delete_mxName);
+        }
+        else{
+            char *find_brackets = strstr(op, "[");
+            char *find_equalSign = strstr(op, "=");
+
+            if(find_brackets && find_equalSign){
+                char resArr;
+                char arr;
+                int r, rr;
+                int c, cc;
+
+                sscanf(op, "%c=%c[%d:%d,%d:%d]", &resArr, &arr, &r, &rr, &c, &cc);
+
+                // printf("%c\n", resArr);
+                // printf("%c\n", arr);
+                // printf("%d %d\n", r, rr);
+                // printf("%d %d\n", c, cc);
+
+                add_a_matrix(resArr, arr, r, rr, c, cc);
+            }
+            else if(find_equalSign){
+                char resArr = '^';
+                char operantA = '^';
+                char operantB = '^';
+                char operator = '^';
+
+                for(int i=0; i<strlen(op); i++){
+                    if(op[i] == '=' || op[i] == ' ' || iscntrl(op[i])){
+                        continue;
+                    }
+                    else if(resArr == '^'){
+                        resArr = op[i];
+                    }
+                    else if(operantA == '^'){
+                        if(op[i] == '+' || op[i] == '-'){
+                            operator = op[i];
+                            operantA = '%';
+                        }
+                        else{
+                            operantA = op[i];
+                        }
+                    }
+                    else if(operator == '^'){
+                        operator = op[i];
+                    }
+                    else if(operantB == '^'){
+                        operantB = op[i];
+                    }
+                }
+
+                printf("%c = %c %c %c\n", resArr, operantA, operator, operantB);
+                
+                if(operantA == '%'){
+                    be_minOrpls_matrix(resArr, operantB, operator);
+                }
+            }
+            else{
+                printf("[x] Invalid command.\n");
+            }
+        }
         
         printf("$ ");
     }
