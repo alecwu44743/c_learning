@@ -26,9 +26,28 @@ int main(){
     int a, aa, b, bb;
 
 
-    scanf("%s", str); // D=C[0:2,1:3]
+    // scanf("%s", str); // D= C [   0:2,1:3]
     sscanf(str, "%c=%c[%d:%d,%d:%d]", &dd, &dd, &a, &aa, &b, &bb);
 
     printf("%c %d %d %d %d\n", dd, a, aa, b, bb);
+
+
+
+    char *ret;
+    char input[100];
+
+
+    while(scanf("%s", input)){
+        ret = strstr(input, "[");
+
+        if(ret){
+            printf("%s\n", "yes");
+        }
+        else{
+            printf("%s\n", "no");
+        }
+    }
+
+    
 
 }
