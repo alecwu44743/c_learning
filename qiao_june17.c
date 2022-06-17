@@ -10,8 +10,6 @@ struct data{
 typedef struct data _data;
 
 
-_data anly[1000];
-
 
 int main(){
     FILE *fp;
@@ -23,8 +21,19 @@ int main(){
         exit(1);
     }
 
-    int index = 0;
+    int rows = 0;
+    while(!feof(fp)){
+        char line[100];
+        fgets(line, 100, fp);
+        rows++;
+    }
+    fclose(fp);
 
+    _data anly[rows];
+    fp = fopen("MCG_out.txt", "r");
+    
+
+    int index = 0;
     while(!feof(fp)){
         fscanf(fp, "%f %f %f %f %f %f", &anly[index].time_stamp, &anly[index].ecg, &anly[index].mcg[0], &anly[index].mcg[1], &anly[index].mcg[2], &anly[index].mcg[3]);
         printf("%.3f %.3f %.3f %.3f %.3f %.3f\n", anly[index].time_stamp, anly[index].ecg, anly[index].mcg[0], anly[index].mcg[1], anly[index].mcg[2], anly[index].mcg[3]);
@@ -60,9 +69,7 @@ int main(){
             else{
                 find_crest = 0;
                 fprintf(fp, "%d: %.3f %.3f", wrtIndex, anly[i-2].time_stamp, anly[i-2].mcg[2]);
-                // if(add = 0){
-                //     prv = anly[i-2];
-                // }
+                prv = anly[i-2];
             }
         }
         else{
@@ -75,9 +82,12 @@ int main(){
                 fprintf(fp, " %.3f %.3f\n", anly[i-2].time_stamp, anly[i-2].mcg[2]);
                 wrtIndex++;
 
-                // if(add){
-                //     fprintf(fp, "%d: %.3f %.3f", prv.time_stamp, prv.mcg[2]);
-                // }
+                prv = anly[i-2];
+
+                if(add == 0){
+                    fprintf(fp, "%d: %.3f %.3f", wrtIndex, prv.time_stamp, prv.mcg[2]);
+                    add = 1;
+                }
             }
         }
 
