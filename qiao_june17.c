@@ -60,9 +60,9 @@ int main(){
             else{
                 find_crest = 0;
                 fprintf(fp, "%d: %.3f %.3f", wrtIndex, anly[i-2].time_stamp, anly[i-2].mcg[2]);
-                if(add = 0){
-                    prv = anly[i-2];
-                }
+                // if(add = 0){
+                //     prv = anly[i-2];
+                // }
             }
         }
         else{
@@ -75,9 +75,9 @@ int main(){
                 fprintf(fp, " %.3f %.3f\n", anly[i-2].time_stamp, anly[i-2].mcg[2]);
                 wrtIndex++;
 
-                if(add){
-                    fprintf(fp, "%d: %.3f %.3f", prv.time_stamp, prv.mcg[2]);
-                }
+                // if(add){
+                //     fprintf(fp, "%d: %.3f %.3f", prv.time_stamp, prv.mcg[2]);
+                // }
             }
         }
 
