@@ -30,7 +30,7 @@ void read_the_file(char *filename){
     fp = fopen(filename, "r");
 
     if(fp == NULL){
-        printf("Error "); // *TODO: change the error message
+        printf("File error."); // *TODO: change the error message
         return;
     }
     else{
@@ -89,6 +89,11 @@ void read_the_file(char *filename){
                                 setCol = 0;
 
                                 mx[matrix_amount].data = malloc(sizeof(double)*mx[matrix_amount].row*mx[matrix_amount].col);
+
+                                if(mx[matrix_amount].data == NULL){
+                                    printf("Memory allocation error.\n");
+                                    return;
+                                }
                             }
                         }
                     }
@@ -153,7 +158,7 @@ void write_all_matrix(char *filename){
     fp = fopen(filename, "w");
 
     if(fp == NULL){
-        printf("Error "); // *TODO: change the error message
+        printf("File error."); // *TODO: change the error message
         return;
     }
     else{
@@ -194,14 +199,14 @@ void print_a_matrix(char *name){
             printf(" %d %d\n", mx[i].row, mx[i].col);
             for(int j=0; j<mx[i].row; j++){
                 for(int k=0; k<mx[i].col; k++){
-                    printf("%lf ", mx[i].data[j*mx[i].col + k]); // *TODO : change the format
+                    printf("%15.5e ", mx[i].data[j*mx[i].col + k]); // *TODO : change the format
                 }
                 printf("\n");
             }
             return;
         }
     }
-    printf("Matrix not found QQ.\n");
+    printf("Matrix not exist.\n");
 }
 
 
@@ -213,7 +218,7 @@ void delete_a_matrix(char *name){
             return;
         }
     }
-    printf("Matrix not found QQ.\n");
+    printf("Matrix not exist.\n");
 }
 
 
@@ -228,12 +233,12 @@ void add_a_matrix(char resArr, char arr, int r, int rr, int c, int cc){
     }
 
     if(r < 0 || c < 0 || rr > mx[findmx].row || cc > mx[findmx].col){
-        printf("Error: invalid matrix index.\n");
+        printf("Matrix out of index.\n");
         return;
     }
 
     if(findmx == -1){
-        printf("Matrix not found QQ.\n");
+        printf("Matrix not exist.\n");
         return;
     }
 
@@ -250,6 +255,12 @@ void add_a_matrix(char resArr, char arr, int r, int rr, int c, int cc){
         mx[matrix_amount].row = rr-r;
         mx[matrix_amount].col = cc-c;
         mx[matrix_amount].data = malloc(sizeof(double)*mx[matrix_amount].row*mx[matrix_amount].col);
+
+        if(mx[matrix_amount].data == NULL){
+            printf("Memory allocation error.\n");
+            return;
+        }
+
         mx[matrix_amount].deleted = 0;
 
         for(int i=0; i<mx[matrix_amount].row; i++){
@@ -262,6 +273,11 @@ void add_a_matrix(char resArr, char arr, int r, int rr, int c, int cc){
     }
     else{
         mx[isResArrExist].data = malloc(sizeof(double)*(rr-r)*(cc-c));
+
+        if(mx[isResArrExist].data == NULL){
+            printf("Memory allocation error.\n");
+            return;
+        }
 
         mx[isResArrExist].row = rr-r;
         mx[isResArrExist].col = cc-c;
@@ -299,17 +315,17 @@ void plus_and_minus_matrix(char resArr, char opA, char opB, char op){
     }
 
     if(isOpAExist == -1){
-        printf("Matrix not found QQ.\n");
+        printf("Matrix not exist.\n");
         return;
     }
 
     if(isOpBExist == -1){
-        printf("Matrix not found QQ.\n");
+        printf("Matrix not exist.\n");
         return;
     }
 
     if(mx[isOpAExist].row != mx[isOpBExist].row || mx[isOpAExist].col != mx[isOpBExist].col){
-        printf("Matrix size not match QQ.\n");
+        printf("Matrix size imcompatible.\n");
         return;
     }
 
@@ -318,6 +334,12 @@ void plus_and_minus_matrix(char resArr, char opA, char opB, char op){
         mx[matrix_amount].row = mx[isOpAExist].row;
         mx[matrix_amount].col = mx[isOpBExist].col;
         mx[matrix_amount].data = malloc(sizeof(double)*mx[matrix_amount].row*mx[matrix_amount].col);
+
+        if(mx[matrix_amount].data == NULL){
+            printf("Memory allocation error.\n");
+            return;
+        }
+
         mx[matrix_amount].deleted = 0;
 
         for(int i=0; i<mx[matrix_amount].row; i++){
@@ -337,6 +359,11 @@ void plus_and_minus_matrix(char resArr, char opA, char opB, char op){
 
     double *tempArr = malloc(sizeof(double)*mx[isOpAExist].row*mx[isOpAExist].col);
 
+    if(tempArr == NULL){
+        printf("Memory allocation error.\n");
+        return;
+    }
+
     if(op == '+'){
         for(int i=0; i<mx[isResArrExist].row; i++){
             for(int j=0; j<mx[isResArrExist].col; j++){
@@ -353,6 +380,11 @@ void plus_and_minus_matrix(char resArr, char opA, char opB, char op){
     }
 
     mx[isResArrExist].data = malloc(sizeof(double)*mx[isResArrExist].row*mx[isResArrExist].col);
+
+    if(mx[isResArrExist].data == NULL){
+        printf("Memory allocation error.\n");
+        return;
+    }
 
     mx[isResArrExist].row = mx[isOpAExist].row;
     mx[isResArrExist].col = mx[isOpBExist].col;
@@ -383,7 +415,7 @@ void be_minOrpls_matrix(char resArr, char opA, char op){
         if(isOpAExist != -1 && isResArrExist != -1) break;
     }
     if(isOpAExist == -1){
-        printf("Matrix not found QQ.\n");
+        printf("Matrix not exist.\n");
         return;
     }
 
@@ -392,6 +424,12 @@ void be_minOrpls_matrix(char resArr, char opA, char op){
         mx[matrix_amount].row = mx[isOpAExist].row;
         mx[matrix_amount].col = mx[isOpAExist].col;
         mx[matrix_amount].data = malloc(sizeof(double)*mx[matrix_amount].row*mx[matrix_amount].col);
+
+        if(mx[matrix_amount].data == NULL){
+            printf("Memory allocation error.\n");
+            return;
+        }
+
         mx[matrix_amount].deleted = 0;
 
         if(op == '+'){
@@ -414,6 +452,11 @@ void be_minOrpls_matrix(char resArr, char opA, char op){
     }
 
     mx[isResArrExist].data = malloc(sizeof(double)*mx[isOpAExist].row*mx[isOpAExist].col);
+
+    if(mx[isResArrExist].data == NULL){
+        printf("Memory allocation error.\n");
+        return;
+    }
 
     if(op == '-'){
         for(int i=0; i<mx[isResArrExist].row; i++){
@@ -454,12 +497,12 @@ void multiply_matrix(char resArr, char opA, char opB){
     }
 
     if(isOpAExist == -1 || isOpBExist == -1){
-        printf("Matrix not found QQ.\n");
+        printf("Matrix not exist.\n");
         return;
     }
 
     if(mx[isOpAExist].col != mx[isOpBExist].row){
-        printf("Matrix not compatible QQ.\n");
+        printf("Matrix size imcompatible.\n");
         return;
     }
 
@@ -467,38 +510,18 @@ void multiply_matrix(char resArr, char opA, char opB){
         strncat(mx[matrix_amount].name, &resArr, 1);
         mx[matrix_amount].row = mx[isOpAExist].row;
         mx[matrix_amount].col = mx[isOpBExist].col;
-        // mx[matrix_amount].data = malloc(sizeof(double) * mx[matrix_amount].row * mx[matrix_amount].col);
+        mx[matrix_amount].data = malloc(sizeof(double) * mx[matrix_amount].row * mx[matrix_amount].col);
 
-        // for(int i=0; i<mx[matrix_amount].row; i++){
-        //     for(int j=0; j<mx[matrix_amount].col; j++){
-        //         double temp = 0;
-        //         for(int k=0; k<mx[isOpAExist].col; k++){
-        //             temp += mx[isOpAExist].data[i*mx[isOpAExist].col + k] * mx[isOpBExist].data[k*mx[isOpBExist].col + j];
-        //         }
-        //         mx[matrix_amount].data[i*mx[matrix_amount].col + j] = temp;
-        //     }
-        // }
-
-        // printf("ccccc\n");
-
-        // if(mx[matrix_amount].data == NULL){
-        //     printf("Memory error QQ.\n");
-        //     return;
-        // }
-
-        printf("aaaa\n");
-
-        int r = 8, c = 5, i, j, count;
- 
-        double **arr = (double**)malloc(r * sizeof(double*) + r*c*sizeof(double));
-
-        printf("ok");
+        if(mx[matrix_amount].data == NULL){
+            printf("Memory allocation error.\n");
+            return;
+        }
             
         for(int i=0; i<mx[isOpAExist].row; i++){
             for(int j=0; j<mx[isOpBExist].col; j++){
-                arr[i][j] = 0;
+                mx[matrix_amount].data[i*mx[matrix_amount].col + j] = 0;
                 for(int k=0; k<mx[isOpBExist].row; k++){
-                    arr[i][j] += mx[isOpAExist].data[i*mx[isOpAExist].col + k] * mx[isOpBExist].data[k*mx[isOpBExist].col + j];
+                    mx[matrix_amount].data[i*mx[matrix_amount].col + j]+= mx[isOpAExist].data[i*mx[isOpAExist].col + k] * mx[isOpBExist].data[k*mx[isOpBExist].col + j];
                 }
             }
         }
@@ -508,6 +531,11 @@ void multiply_matrix(char resArr, char opA, char opB){
     }
 
     double *tempArr = malloc(sizeof(double)*mx[isOpAExist].row*mx[isOpBExist].col);
+
+    if(tempArr == NULL){
+        printf("Memory allocation error.\n");
+        return;
+    }
 
     mx[isResArrExist].row = mx[isOpAExist].row;
     mx[isResArrExist].col = mx[isOpBExist].col;
@@ -631,9 +659,6 @@ int main(){
                 else if(operator == '*'){
                     multiply_matrix(resArr, operantA, operantB);
                 }
-            }
-            else{
-                printf("[x] Invalid command.\n");
             }
         }
         
