@@ -70,8 +70,8 @@ int main(){
     int p;
 
     while(scanf("%d", &p) != EOF){
-        normal_pow(2, p);
-        binaryExponentiation(2, p);
-        lectureSol(2, p);
+        // normal_pow(2, p);
+        // binaryExponentiation(2, p);
+        lectureSol(3, p);
     }
 }
