@@ -6,10 +6,10 @@ int binaryExponentiation(int a, int b){
     if(b == 0){
         return 1;
     }
-    else if(b % 2 == 1){
+    else if(b % 2 == 1){ // 1
         return binaryExponentiation(a, b/2) * binaryExponentiation(a, b/2) * a;
     }
-    else{
+    else{ // 0
         return binaryExponentiation(a, b/2) * binaryExponentiation(a, b/2);
     }
 }
