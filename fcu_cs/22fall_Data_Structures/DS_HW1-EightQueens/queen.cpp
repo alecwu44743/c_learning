@@ -66,7 +66,7 @@ bool isPrepPlaced(int r, int c){
         }
     }
 
-    cout << "R" << r << "C" << c << endl;
+    // cout << "R" << r << "C" << c << endl;
 
     return false;
 }
@@ -115,7 +115,7 @@ int main() {
             ansQueens[pre_placed[i].r][pre_placed[i].c] = 'Q';
         }
 
-        printQueen(queens);
+        // printQueen(queens);
 
         // print_ansQueens();
         
