@@ -49,6 +49,16 @@ void print_ansQueensPos(){ // print ths position
     cout << endl;
 }
 
+void print_ansQueensPos_checker(){ // print ths position
+    // cout << "R C" << endl;
+
+    cout << ansQp_index << endl;
+    for(int i = 0; i < ansQp_index; i++){
+        cout << ansQueensPos[i].c << " " << ansQueensPos[i].r << endl;
+    }
+    cout << endl;
+}
+
 
 bool checkQueen(char queens[10][10], int row, int col){ // Check if this location can be placed
     for(int i=0; i<R; i++) { // check this col
@@ -91,8 +101,6 @@ bool isPrePlaced(int r, int c){ // Check if this location is pre-placed
         }
     }
 
-    // cout << "R" << r << "C" << c << endl;
-
     return false;
 }
 
@@ -109,11 +117,6 @@ int howManyQueens(char queens[10][10]){ // Count how many queens are placed
 }
 
 void placeQueen(char queens[10][10], int row) {
-    // cout << "  cnt: " << cnt << "maxQueens:" << maxQueens << endl;
-    // cout << "==="  << "row: " << row << endl;
-    // printQueen(queens);
-    // cout << "===" << endl;
-
     int QQ = howManyQueens(queens);
     if(QQ > maxQueens){
         // printQueen(queense);
@@ -129,13 +132,6 @@ void placeQueen(char queens[10][10], int row) {
                 }
             }
         }
-
-        // cout << "maxQueens: " << maxQueens << endl;
-        // print_ansQueens();
-
-        // print_ansQueens();
-        // printQueen(queens);
-        // cout << "maxQueens: " << maxQueens << endl;
     }
 
     if(row == R) { // If all rows are placed, return
@@ -188,9 +184,10 @@ int main() {
         print_ansQueens();
         cout << "Additional Queens amount: " << ansQp_index << endl;
         print_ansQueensPos();
+
+        // print_ansQueensPos_checker();
     }
 
-    
 
     return 0;
 }
