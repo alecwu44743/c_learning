@@ -16,6 +16,8 @@ char ansQueens[10][10];
 int pre_placed_amount;
 pos pre_placed[100];
 
+int ansQp_index = 0;
+pos ansQueensPos[100];
 
 
 void printQueen(char queens[10][10]){
@@ -34,6 +36,15 @@ void print_ansQueens(){
             cout << ansQueens[i][j] << " ";
         }
         cout << endl;
+    }
+    cout << endl;
+}
+
+void print_ansQueensPos(){
+    cout << "R C" << endl;
+
+    for(int i = 0; i < ansQp_index; i++){
+        cout << ansQueensPos[i].r << " " << ansQueensPos[i].c << endl;
     }
     cout << endl;
 }
@@ -99,17 +110,23 @@ int howManyQueens(char queens[10][10]){
 
 void placeQueen(char queens[10][10], int row, int cnt) {
     // cout << "  cnt: " << cnt << "maxQueens:" << maxQueens << endl;
-    cout << "==="  << "row: " << row << endl;
-    printQueen(queens);
-    cout << "===" << endl;
+    // cout << "==="  << "row: " << row << endl;
+    // printQueen(queens);
+    // cout << "===" << endl;
 
     int QQ = howManyQueens(queens);
     if(QQ > maxQueens){
         // printQueen(queense);
+        ansQp_index = 0;
         maxQueens = QQ;
         for(int i=0; i<R; i++) {
             for(int j=0; j<C; j++) {
                 ansQueens[i][j] = queens[i][j];
+                if(!isPrepPlaced(i, j) && queens[i][j] == 'Q'){
+                    ansQueensPos[ansQp_index].r = i;
+                    ansQueensPos[ansQp_index].c = j;
+                    ansQp_index++;
+                }
             }
         }
 
@@ -125,16 +142,20 @@ void placeQueen(char queens[10][10], int row, int cnt) {
         return;
     }
 
-    // bool nexted = false;
+    bool nexted = false;
     for(int j=0; j<C; j++) {
-        printQueen(queens);
+        // printQueen(queens);
         if(checkQueen(queens, row, j) && !isPrepPlaced(row, j)) {
-            cout << "row" << row << "j" << j << endl;
+            // cout << "row" << row << "j" << j << endl;
             queens[row][j]='Q';
-            // nexted = true;
+            nexted = true;
             placeQueen(queens, row+1, cnt+1);
             queens[row][j]='.';
         }
+    }
+
+    if(!nexted){
+        placeQueen(queens, row+1, cnt);
     }
 }
 
@@ -166,13 +187,14 @@ int main() {
         // print_ansQueens();
         
 
-        for(int i=0; i<R; i++) {
+        // for(int i=0; i<R; i++) {
             // printQueen(queens);
-            placeQueen(queens, i, 0);
-        }
+            placeQueen(queens, 0, 0);
+        // }
         // cout << "_____" << endl;
         print_ansQueens();
-        cout << maxQueens << endl;
+        cout << "Additional Queens amount: " << maxQueens - pre_placed_amount << endl;
+        print_ansQueensPos();
         // printQueen(queens);
     }
 
