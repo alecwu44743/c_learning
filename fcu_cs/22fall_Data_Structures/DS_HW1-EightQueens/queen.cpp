@@ -81,10 +81,10 @@ bool checkQueen(char queens[10][10], int row, int col){ // Check if this locatio
             return false;
     }
 
-    return true;
+    return true; // If it passes all the checks, it can be placed
 }
 
-bool isPrepPlaced(int r, int c){
+bool isPrePlaced(int r, int c){ // Check if this location is pre-placed
     for(int i = 0; i < pre_placed_amount; i++){
         if(pre_placed[i].r == r && pre_placed[i].c == c){
             return true;
@@ -96,7 +96,7 @@ bool isPrepPlaced(int r, int c){
     return false;
 }
 
-int howManyQueens(char queens[10][10]){
+int howManyQueens(char queens[10][10]){ // Count how many queens are placed
     int count = 0;
     for(int i = 0; i < R; i++){
         for(int j = 0; j < C; j++){
@@ -122,7 +122,7 @@ void placeQueen(char queens[10][10], int row) {
         for(int i=0; i<R; i++) {
             for(int j=0; j<C; j++) {
                 ansQueens[i][j] = queens[i][j];
-                if(!isPrepPlaced(i, j) && queens[i][j] == 'Q'){
+                if(!isPrePlaced(i, j) && queens[i][j] == 'Q'){
                     ansQueensPos[ansQp_index].r = i;
                     ansQueensPos[ansQp_index].c = j;
                     ansQp_index++;
@@ -138,23 +138,23 @@ void placeQueen(char queens[10][10], int row) {
         // cout << "maxQueens: " << maxQueens << endl;
     }
 
-    if(row == R) {
+    if(row == R) { // If all rows are placed, return
         return;
     }
 
-    bool nexted = false;
+    bool nexted = false; // whether the next row has been placed
     for(int j=0; j<C; j++) {
         // printQueen(queens);
-        if(checkQueen(queens, row, j) && !isPrepPlaced(row, j)) {
+        if(checkQueen(queens, row, j) && !isPrePlaced(row, j)) {
             // cout << "row" << row << "j" << j << endl;
-            queens[row][j]='Q';
-            nexted = true;
+            queens[row][j]='Q'; // Case 1: Place the queen
+            nexted = true; // the next row has been placed
             placeQueen(queens, row+1);
-            queens[row][j]='.';
+            queens[row][j]='.'; // Case 2: Not place the queen
         }
     }
 
-    if(!nexted){
+    if(!nexted){ // if the next row has not been placed, then place the queen in the next row
         placeQueen(queens, row+1);
     }
 }
@@ -162,49 +162,35 @@ void placeQueen(char queens[10][10], int row) {
 int main() {
     char queens[10][10];
 
-    while(cin >> C >> R >> pre_placed_amount){
-        for(int i=0; i<R; i++) {
+    while(cin >> C >> R >> pre_placed_amount){ // input the data
+        for(int i=0; i<R; i++) { // initialize the chessboard
             for(int j=0; j<C; j++) {
                 queens[i][j] = '.';
             }
         }
 
-        for(int i=0; i<R; i++) {
+        for(int i=0; i<R; i++) { // intialize the answer chessboard
             for(int j=0; j<C; j++) {
                 ansQueens[i][j] = '.';
             }
         }
 
         maxQueens = 0;
-        for(int i=0; i<pre_placed_amount; i++) {
+        for(int i=0; i<pre_placed_amount; i++) { // input the pre-placed queens
             cin >> pre_placed[i].c >> pre_placed[i].r;
             queens[pre_placed[i].r][pre_placed[i].c] = 'Q';
             ansQueens[pre_placed[i].r][pre_placed[i].c] = 'Q';
         }
-
-        // printQueen(queens);
-
-        // print_ansQueens();
         
 
-        // for(int i=0; i<R; i++) {
-            // printQueen(queens);
-            placeQueen(queens, 0);
-        // }
-        // cout << "_____" << endl;
+        placeQueen(queens, 0); // start to place the queens
+
         print_ansQueens();
         cout << "Additional Queens amount: " << ansQp_index << endl;
         print_ansQueensPos();
-        // printQueen(queens);
     }
 
     
 
     return 0;
 }
-
-/*
-5 3 2
-3 2
-4 2
-*/
