@@ -10,6 +10,8 @@ typedef pair <int, string> baby;
 //     string name;
 // };
 
+node* head = NULL;     head->name
+
 
 int main(){
     int n;
