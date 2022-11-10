@@ -28,7 +28,7 @@ bool isParentheses(char c){
         return false;
 }
 
-int ISP(char c){
+int ISP(char c){ // ISP -> In Stack Priority
     switch(c){
         case '^':
             return 3;
@@ -47,7 +47,7 @@ int ISP(char c){
     return -1;
 }
 
-int ICP(char c){
+int ICP(char c){ // ICP -> Incoming Priority
     switch(c){
         case '(':
             return 6;
