@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 #include <stack>
 
 using namespace std;
@@ -8,6 +9,20 @@ stack <char> ValidParentheses;
 
 bool isDigit(char c){
     if(c >= '0' && c <= '9')
+        return true;
+    else
+        return false;
+}
+
+bool isOperator(char c){
+    if(c == '+' || c == '-' || c == '*' || c == '/' || c == '^')
+        return true;
+    else
+        return false;
+}
+
+bool isParentheses(char c){
+    if(c == '(' || c == '[' || c == '{' || c == ')' || c == ']' || c == '}')
         return true;
     else
         return false;
@@ -71,21 +86,72 @@ bool checkBrackets(){
 }
 
 
+void postfix_operator(string str){
+    stack <int> nums;
+
+    for(int i=0; i<str.length(); i++){
+        if(isDigit(str[i])){
+            int val = 0;
+            while(isDigit(str[i])){
+                val = val * 10 + (str[i] - '0');
+                i++;
+            }
+
+            nums.push(val);
+        }
+        else if(str[i] != ' '){
+            int b = nums.top(); nums.pop();
+            int a = nums.top(); nums.pop();
+
+            switch(str[i]){
+                case '+':
+                    nums.push(a + b);
+                    break;
+                case '-':
+                    nums.push(a - b);
+                    break;
+                case '*':
+                    nums.push(a * b);
+                    break;
+                case '/':
+                    nums.push(a / b);
+                    break;
+                case '^':
+                    nums.push(pow(a, b));
+                    break;
+            }
+        }
+    }
+
+    cout << "Postfix: " << str << endl;
+    cout << "Ans: " << nums.top() << endl;
+}
+
+
 
 int main(){
     string str;
 
-    while(cin >> str){
+    while(getline(cin, str)){
         stack <char> s;
 
         string ans = "";
+        string clear_str = "";
         
         int val = 0;
         bool isValid = true;
 
-        cout << str << endl;
+        int num_cnt = 0;
+        int op_cnt = 0;
+
         for(int i=0; i<str.length(); i++){
-            cout << str[i] << endl;
+            if(!isDigit(str[i]) && !isOperator(str[i]) && !isParentheses(str[i])){
+                continue;
+            }
+
+            clear_str += str[i];
+            clear_str += ' ';
+            
             if(!checkBrackets()){
                 isValid = false;
                 break;
@@ -100,7 +166,16 @@ int main(){
                     index++;
                 }
 
+                if(index != str.length()){
+                    if(str[index] == '(' || str[index] == '[' || str[index] == '{'){
+                        isValid = false;
+                        break;
+                    }
+                }
+
+                num_cnt++;
                 ans += to_string(val);
+                ans += ' ';
                 val = 0;
                 i = index - 1;
             }
@@ -118,6 +193,8 @@ int main(){
                     else{
                         while(s.top() != '(' && s.top() != '[' && s.top() != '{'){
                             ans += s.top();
+                            ans += ' ';
+                            op_cnt++;
                             s.pop();
                         }
                         s.pop();
@@ -134,6 +211,8 @@ int main(){
             else{
                 while(!s.empty() && (ICP(str[i]) <= ISP(s.top()))){
                     ans += s.top();
+                    ans += ' ';
+                    op_cnt++;
                     s.pop();
                 }
                 s.push(str[i]);
@@ -146,16 +225,39 @@ int main(){
 
         while(!s.empty()){
             ans += s.top();
+            ans += ' ';
+            op_cnt++;
             s.pop();
         }
 
-        if(isValid)
-            cout << ans << endl;
+        if(isValid && checkBrackets() && ValidParentheses.empty() && num_cnt == op_cnt + 1){
+            cout << "Infix: " << clear_str << endl;
+            postfix_operator(ans);
+            // cout << ans << endl;
+        }
         else
             cout << "ERROR" << endl;
 
         while(!ValidParentheses.empty()){
             ValidParentheses.pop();
         }
+
+
+        cout << endl;
     }
 }
+
+
+// 測資1: (10+3)*5-6 輸出:59 
+// 測資2: 2^[4*(5-(2+3))] 輸出:1 
+// 測資3: 3+(2*[1+4]) 輸出:ERROR 
+// 測資4: 2(1+3) 輸出:ERROR
+
+// 2 3 4 - * 12 4 / +
+// 2*(3-4)+12/4
+// 2*(3- 4 ) + 12/4
+
+
+// ((2*(3-4))+(12/4))
+// ( ( 2 * ( 3 - 4 ) ) + ( 12 / 4 ) )
+// ( ( 2 * ( 3 -         4 ) ) + ( 12 / 4 jiojeoiwjexo) )
