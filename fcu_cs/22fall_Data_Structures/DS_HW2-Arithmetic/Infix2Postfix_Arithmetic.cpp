@@ -191,8 +191,10 @@ int main(){
                 continue;
             }
 
-            clear_str += str[i];
-            clear_str += ' ';
+            if(!isDigit(str[i])){
+                clear_str += str[i];
+                clear_str += ' ';
+            }
             
             if(!checkBrackets()){ // check brackets are valid
                 isValid = false;
@@ -214,6 +216,9 @@ int main(){
                         break;
                     }
                 }
+
+                clear_str += to_string(val);
+                clear_str += ' ';
 
                 num_cnt++;
                 ans += to_string(val);
