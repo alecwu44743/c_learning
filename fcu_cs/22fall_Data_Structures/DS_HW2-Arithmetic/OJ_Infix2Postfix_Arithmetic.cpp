@@ -69,7 +69,7 @@ int ICP(char c){ // ICP -> Incoming Priority
 }
 
 
-bool checkBrackets(){ // check brackets are valid
+bool checkBrackets(){ 
     if(ValidParentheses.size() > 1){ // check if there are more than one brackets
         char up = ValidParentheses.top(); ValidParentheses.pop();
         char dn = ValidParentheses.top(); ValidParentheses.pop();
@@ -188,7 +188,8 @@ int main(){
 
         for(int i=0; i<str.length(); i++){
             if(!isDigit(str[i]) && !isOperator(str[i]) && !isParentheses(str[i])){ // if str[i] is not a digit, operator, or parentheses
-                continue;
+                isValid = false;
+                break;
             }
 
             clear_str += str[i];
@@ -273,9 +274,9 @@ int main(){
         }
 
         if(isValid && checkBrackets() && ValidParentheses.empty() && num_cnt == op_cnt + 1){ // check infix is valid
-            cout << "Infix: " << clear_str << endl;
-            postfix_operator(ans); // calculate postfix
-            // output_oj(ans);
+            // cout << "Infix: " << clear_str << endl;
+            // postfix_operator(ans); // calculate postfix
+            output_oj(ans);
             // cout << ans << endl;
         }
         else
@@ -286,7 +287,7 @@ int main(){
         }
 
 
-        cout << endl;
+        // cout << endl;
     }
 }
 
