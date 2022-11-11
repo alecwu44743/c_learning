@@ -129,7 +129,7 @@ void postfix_operator(string str){
 
 
 void output_oj(string str){ // output the answer for the online judge
-    stack <int> nums;
+    stack <double> nums;
 
     for(int i=0; i<str.length(); i++){
         if(isDigit(str[i])){
@@ -142,8 +142,8 @@ void output_oj(string str){ // output the answer for the online judge
             nums.push(val);
         }
         else if(str[i] != ' '){
-            int b = nums.top(); nums.pop();
-            int a = nums.top(); nums.pop();
+            double b = nums.top(); nums.pop();
+            double a = nums.top(); nums.pop();
 
             switch(str[i]){
                 case '+':
@@ -166,7 +166,7 @@ void output_oj(string str){ // output the answer for the online judge
     }
 
     // cout << "Postfix: " << str << endl;
-    cout << nums.top() << endl;
+    printf("%.2f\n", nums.top());
 }
 
 

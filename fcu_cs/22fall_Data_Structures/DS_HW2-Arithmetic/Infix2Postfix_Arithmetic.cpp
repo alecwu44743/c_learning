@@ -87,7 +87,7 @@ bool checkBrackets(){ // check brackets are valid
 
 
 void postfix_operator(string str){
-    stack <int> nums; // store the numbers
+    stack <double> nums; // store the numbers
 
     for(int i=0; i<str.length(); i++){
         if(isDigit(str[i])){ // if the character is a number
@@ -100,8 +100,8 @@ void postfix_operator(string str){
             nums.push(val);
         }
         else if(str[i] != ' '){ // if the character is an operator
-            int b = nums.top(); nums.pop(); // pop the top two numbers
-            int a = nums.top(); nums.pop();
+            double b = nums.top(); nums.pop(); // pop the top two numbers
+            double a = nums.top(); nums.pop();
 
             switch(str[i]){
                 case '+':
