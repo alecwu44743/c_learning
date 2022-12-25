@@ -118,7 +118,7 @@ void compress(){
     }
 
     for(int i = 0; i < index; i++){
-        COMPRESS_BIN.put(bytes_string[i]);
+        COMPRESS_BIN.put(bytes_string[i]); // write the compressed file into the compress.bin
     }
 
     COMPRESS_BIN.close();
@@ -149,31 +149,29 @@ void decompress(){
     COMPRESS_BIN.close();
 
     for(auto data : bytes_string){
-        string tmp = bitset<8>(data).to_string();
+        string tmp = bitset<8>(data).to_string(); // convert int to binary string
         output_compress += tmp;
     }
 
     while(CODE_TXT){
-        CODE_TXT >> s_char >> s_code;
+        CODE_TXT >> s_char >> s_code; // read the code.txt
         // cout << s_char << " " << s_code << endl;
-        code_char[s_code] = (char)stoi(s_char);
-
+        code_char[s_code] = (char)stoi(s_char); // build the code
     }
     CODE_TXT.close();
 
-    bool isEND = false;
-    for(int i = 0; i < output_compress.size(); i++){
+    for(int i = 0; i < output_compress.size(); i++){  // decode the compressed file
         code += output_compress[i];
-        if(code_char.find(code) != code_char.end()){
-            if(code_char[code] == '\0'){
-                isEND = true;
+        if(code_char.find(code) != code_char.end()){  // if the code is found
+            if(code_char[code] == '\0'){ // if the character is the end of file
                 break;
             }
-            output += code_char[code];
-            code = "";
+            output += code_char[code]; // decode the compressed file
+            code = ""; // reset the code
         }
     }
 
+    // write the decompressed file into the output.txt
     OUTPUT_TXT.open("output.txt");
     OUTPUT_TXT << output;
     OUTPUT_TXT.close();
